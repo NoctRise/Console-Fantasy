@@ -1,9 +1,13 @@
-package classes
+package classes.character
+
+import classes.utils.getUserInput
 
 class Schwarzmagier(name: String) : Held(name) {
 
+
     init {
-        this.hp = 650
+        this.currentHP = 650
+        this.maxHP = currentHP
         this.critChance = 25
         this.physischeResistenz = 5
         this.magischeResistenz = 30
@@ -15,22 +19,15 @@ class Schwarzmagier(name: String) : Held(name) {
 
         println(
             """
-            [1] Stockhieb (physischer single target Skill)
-            [2] Feuerball (magischer single target Skill)
-            [3] Eissturm (magischer single target Skill)
-            [4] Ultima (magischer AOE Skill)
+            [1] Stockhieb 
+            [2] Feuerball 
+            [3] Eissturm 
+            [4] Ultima 
             
         """.trimIndent()
         )
-        var eingabe = 0
-        try {
-            do {
-                println("Welchen Skill willst du einsetzen?")
-                eingabe = readln().toInt()
-            } while (eingabe !in (1..4))
-        } catch (e: Exception) {
-            println("Nur Eingaben von 1-4 sind erlaubt.")
-        }
+
+        val eingabe = getUserInput(max = 4)
 
 
         when (eingabe) {
@@ -58,7 +55,7 @@ class Schwarzmagier(name: String) : Held(name) {
 
         println("${gegner.name} verliert $finalDmg HP.\n")
 
-        gegner.hp -= finalDmg
+        gegner.currentHP -= finalDmg
     }
 
     fun feuerBall(gegner: Gegner) {
@@ -72,7 +69,7 @@ class Schwarzmagier(name: String) : Held(name) {
 
         println("${gegner.name} verliert $finalDmg HP.\n")
 
-        gegner.hp -= finalDmg
+        gegner.currentHP -= finalDmg
     }
 
     fun eisSturm(gegner: Gegner) {
@@ -86,7 +83,7 @@ class Schwarzmagier(name: String) : Held(name) {
 
         println("${gegner.name} verliert $finalDmg HP.\n")
 
-        gegner.hp -= finalDmg
+        gegner.currentHP -= finalDmg
     }
 
     fun ultima(gegner: List<Gegner>) {
@@ -99,7 +96,7 @@ class Schwarzmagier(name: String) : Held(name) {
             val baseDmg = ((350 * (intelligence / 100.0)) * ((100 - it.magischeResistenz) / 100.0)).toInt()
             val finalDmg = criticalHit(baseDmg)
 
-            it.hp -= finalDmg
+            it.currentHP -= finalDmg
             println("${it.name} verliert $finalDmg HP.")
             Thread.sleep(1000)
         }

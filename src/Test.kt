@@ -1,31 +1,48 @@
-import classes.Boss
-import classes.Schwarzmagier
+import classes.character.Krieger
+import classes.character.SchwarzDrache
+import classes.character.Schwarzmagier
 
 fun main() {
-    var boss = Boss("Feuerdrache")
-    var boss1 = Boss("Wasserdrache")
-    var magier = Schwarzmagier("John")
+    val schwarzDrache = SchwarzDrache()
+    val magier = Schwarzmagier("John")
+    val krieger = Krieger("Artur")
 
-    /*println("${magier.name} setzt Feuerball ein.")
-    println("${magier.name} hat ${magier.feuerBall(boss)} gemacht.")
-    println("${boss.name} hat nur noch ${boss.hp}hp")
+    val heldenGruppe = listOf(magier, krieger)
+    val gegnerGruppe = listOf(schwarzDrache)
+    val spielFeld = heldenGruppe + gegnerGruppe
 
-    println("${magier.name} setzt Eissturm ein.")
-    println("${magier.name} hat ${magier.eisSturm(boss)}dmg gemacht.")
-    println("${boss.name} hat nur noch ${boss.hp}hp")
+    /*
+        val heldenGruppe = Team(mutableListOf(magier, krieger))
+        val gegnerGruppe = listOf(schwarzDrache)*/
 
-    println("${magier.name} setzt Stockhieb ein.")
-    println("${magier.name} hat ${magier.stockHieb(boss)}dmg gemacht.")
-    println("${boss.name} hat nur noch ${boss.hp}hp")
 
-    println("${magier.name} setzt Ultima ein.")
-    println("${magier.name} hat ${magier.ultima(listOf(boss, boss1))}dmg gemacht.")
-    println("${boss.name} hat nur noch ${boss.hp}hp")
-    println("${boss1.name} hat nur noch ${boss1.hp}hp")*/
 
-    while (true) {
-        magier.attack(listOf(boss, boss1))
-    }
+    do {
+
+        heldenGruppe.forEach {
+            if (it.isAlive()) {
+                it.turn()
+                it.attack(gegnerGruppe)
+            }
+
+        }
+
+
+        gegnerGruppe.forEach {
+            if (it.isAlive()) {
+                schwarzDrache.turn()
+                schwarzDrache.attack(heldenGruppe)
+            }
+
+        }
+
+
+        spielFeld.forEach {
+            println("${it.name} ${it.currentHP}/${it.maxHP}")
+        }
+        println()
+
+    } while (magier.isAlive() && schwarzDrache.isAlive())
 
 
 }
