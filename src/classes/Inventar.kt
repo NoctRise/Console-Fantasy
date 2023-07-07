@@ -3,12 +3,7 @@ package classes
 import java.lang.Exception
 
 class Inventar {
-    var inventarItems = mutableListOf<Items>(
-        Items("Heiltrank", 5),
-        Items("PHY+ Trank", 1),
-        Items("MAG+ Trank", 2),
-
-        )
+    var inventarItems = mutableListOf<Item>( )
 
 
     fun showItemMenu() {

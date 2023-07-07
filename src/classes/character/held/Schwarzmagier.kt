@@ -1,21 +1,23 @@
-package classes.character
+package classes.character.held
 
+import classes.character.gegner.Gegner
+import classes.utils.chooseEnemy
 import classes.utils.getUserInput
 
 class Schwarzmagier(name: String) : Held(name) {
 
 
     init {
-        this.currentHP = 650
-        this.maxHP = currentHP
+        this.maxHP = 650
+        this.currentHP = maxHP
         this.critChance = 25
-        this.physischeResistenz = 5
-        this.magischeResistenz = 30
+        this.defense = 5
+        this.magicDefense = 30
         this.strength = 20
         this.intelligence = 175
     }
 
-    override fun attack(gegner: List<Gegner>) {
+    override fun attack(gegnerListe: List<Gegner>) {
 
         println(
             """
@@ -27,14 +29,19 @@ class Schwarzmagier(name: String) : Held(name) {
         """.trimIndent()
         )
 
-        val eingabe = getUserInput(max = 4)
+        val skill = getUserInput(max = 4)
+        val target =
+            if (gegnerListe.size > 1 && skill != 4) {
+                chooseEnemy(gegnerListe)
+            } else {
+                gegnerListe.first()
+            }
 
-
-        when (eingabe) {
-            1 -> stockHieb(gegner.first())
-            2 -> feuerBall(gegner.first())
-            3 -> eisSturm(gegner.first())
-            4 -> ultima(gegner)
+        when (skill) {
+            1 -> stockHieb(target)
+            2 -> feuerBall(target)
+            3 -> eisSturm(target)
+            4 -> ultima(gegnerListe)
         }
         Thread.sleep(1000)
     }
@@ -49,13 +56,13 @@ class Schwarzmagier(name: String) : Held(name) {
         (strength / 100.0) berechne Multiplikator anhand des Attributs strength
         (100 - gegner.physischeResistenz) / 100.0) berechne Classes.Gegner Resistenz, um Schaden zu verringern
         */
-        val baseDmg = ((100 * (strength / 100.0)) * ((100 - gegner.physischeResistenz) / 100.0)).toInt()
+        val baseDmg = ((100 * (strength / 100.0)) * ((100 - gegner.defense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
         println("${gegner.name} verliert $finalDmg HP.\n")
 
-        gegner.currentHP -= finalDmg
+        gegner.takeDmg(finalDmg)
     }
 
     fun feuerBall(gegner: Gegner) {
@@ -63,13 +70,13 @@ class Schwarzmagier(name: String) : Held(name) {
 
         Thread.sleep(1000)
 
-        val baseDmg = ((100 * (intelligence / 100.0)) * ((100 - gegner.magischeResistenz) / 100.0)).toInt()
+        val baseDmg = ((100 * (intelligence / 100.0)) * ((100 - gegner.magicDefense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
         println("${gegner.name} verliert $finalDmg HP.\n")
 
-        gegner.currentHP -= finalDmg
+        gegner.takeDmg(finalDmg)
     }
 
     fun eisSturm(gegner: Gegner) {
@@ -77,13 +84,13 @@ class Schwarzmagier(name: String) : Held(name) {
 
         Thread.sleep(1000)
 
-        val baseDmg = ((200 * (intelligence / 100.0)) * ((100 - gegner.magischeResistenz) / 100.0)).toInt()
+        val baseDmg = ((200 * (intelligence / 100.0)) * ((100 - gegner.magicDefense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
         println("${gegner.name} verliert $finalDmg HP.\n")
 
-        gegner.currentHP -= finalDmg
+        gegner.takeDmg(finalDmg)
     }
 
     fun ultima(gegner: List<Gegner>) {
@@ -93,10 +100,10 @@ class Schwarzmagier(name: String) : Held(name) {
 
         gegner.forEach {
 
-            val baseDmg = ((350 * (intelligence / 100.0)) * ((100 - it.magischeResistenz) / 100.0)).toInt()
+            val baseDmg = ((350 * (intelligence / 100.0)) * ((100 - it.magicDefense) / 100.0)).toInt()
             val finalDmg = criticalHit(baseDmg)
 
-            it.currentHP -= finalDmg
+            it.takeDmg(finalDmg)
             println("${it.name} verliert $finalDmg HP.")
             Thread.sleep(1000)
         }

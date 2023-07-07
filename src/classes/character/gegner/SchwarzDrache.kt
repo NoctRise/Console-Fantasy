@@ -1,13 +1,15 @@
-package classes.character
+package classes.character.gegner
+
+import classes.character.held.Held
 
 class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
     init {
-        this.currentHP = 3000
-        this.maxHP = currentHP
+        this.maxHP = 3000
+        this.currentHP = maxHP
         this.critChance = 15
-        this.physischeResistenz = 40
-        this.magischeResistenz = 5
+        this.defense = 20
+        this.magicDefense = 5
         this.strength = 250
         this.intelligence = 150
     }
@@ -19,13 +21,13 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
         Thread.sleep(1000)
 
-        val baseDmg = ((100 * (strength / 100.0)) * ((100 - held.physischeResistenz) / 100.0)).toInt()
+        val baseDmg = ((100 * (strength / 100.0)) * ((100 - held.defense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
         println("${held.name} verliert $finalDmg HP.\n")
 
-        held.currentHP -= finalDmg
+        held.takeDmg(finalDmg)
 
     }
 
@@ -35,13 +37,13 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
         Thread.sleep(1000)
 
-        val baseDmg = ((100 * (intelligence / 100.0)) * ((100 - held.magischeResistenz) / 100.0)).toInt()
+        val baseDmg = ((100 * (intelligence / 100.0)) * ((100 - held.magicDefense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
         println("${held.name} verliert $finalDmg HP.\n")
 
-        held.currentHP -= finalDmg
+        held.takeDmg(finalDmg)
     }
 
 
@@ -51,13 +53,13 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
         Thread.sleep(1000)
 
-        val baseDmg = ((150 * (strength / 100.0)) * ((100 - held.physischeResistenz) / 100.0)).toInt()
+        val baseDmg = ((150 * (strength / 100.0)) * ((100 - held.defense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
         println("${held.name} verliert $finalDmg HP.\n")
 
-        held.currentHP -= finalDmg
+        held.takeDmg(finalDmg)
     }
 
     fun superNova(heldenList: List<Held>) {
@@ -66,27 +68,29 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
             Thread.sleep(1000)
 
-            heldenList.forEach {
 
-                val baseDmg = ((350 * (intelligence / 100.0)) * ((100 - it.magischeResistenz) / 100.0)).toInt()
-                val finalDmg = criticalHit(baseDmg)
+            val baseDmg = ((350 * (intelligence / 100.0)) * ((100 - it.magicDefense) / 100.0)).toInt()
+            val finalDmg = criticalHit(baseDmg)
 
-                it.currentHP -= finalDmg
-                println("${it.name} verliert $finalDmg HP.")
-                Thread.sleep(1000)
-            }
+            it.takeDmg(finalDmg)
+            println("${it.name} verliert $finalDmg HP.")
+            Thread.sleep(1000)
+
             println()
         }
     }
 
     override fun attack(gegner: List<Held>) {
 
+        val targetList = gegner.filter { it.isAlive() }
+
         when ((1..100).random()) {
-            in 1..30 -> drachenKlaue(gegner.random())
-            in 31..60 -> feuerAtem(gegner.random())
-            in 61..89 -> schwanzHieb(gegner.random())
-            in 90..100 -> superNova(gegner)
+            in 1..30 -> drachenKlaue(targetList.random())
+            in 31..60 -> feuerAtem(targetList.random())
+            in 61..89 -> schwanzHieb(targetList.random())
+            in 90..100 -> superNova(targetList)
         }
+        Thread.sleep(1000)
     }
 
 

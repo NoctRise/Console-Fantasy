@@ -1,48 +1,18 @@
-import classes.character.Krieger
-import classes.character.SchwarzDrache
-import classes.character.Schwarzmagier
+import classes.Battle
+import classes.character.gegner.GegnerTeam
+import classes.character.held.Krieger
+import classes.character.gegner.SchwarzDrache
+import classes.character.held.HeldenTeam
+import classes.character.held.Schwarzmagier
+import classes.utils.createTeam
+
 
 fun main() {
-    val schwarzDrache = SchwarzDrache()
-    val magier = Schwarzmagier("John")
-    val krieger = Krieger("Artur")
 
-    val heldenGruppe = listOf(magier, krieger)
-    val gegnerGruppe = listOf(schwarzDrache)
-    val spielFeld = heldenGruppe + gegnerGruppe
+    val heldenTeam = createTeam()
+    val gegnerTeam = GegnerTeam(mutableListOf(SchwarzDrache()))
 
-    /*
-        val heldenGruppe = Team(mutableListOf(magier, krieger))
-        val gegnerGruppe = listOf(schwarzDrache)*/
-
-
-
-    do {
-
-        heldenGruppe.forEach {
-            if (it.isAlive()) {
-                it.turn()
-                it.attack(gegnerGruppe)
-            }
-
-        }
-
-
-        gegnerGruppe.forEach {
-            if (it.isAlive()) {
-                schwarzDrache.turn()
-                schwarzDrache.attack(heldenGruppe)
-            }
-
-        }
-
-
-        spielFeld.forEach {
-            println("${it.name} ${it.currentHP}/${it.maxHP}")
-        }
-        println()
-
-    } while (magier.isAlive() && schwarzDrache.isAlive())
-
+    val battle = Battle(heldenTeam, gegnerTeam)
+    battle.startBattle()
 
 }

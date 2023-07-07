@@ -1,23 +1,19 @@
 package classes.character
 
-import kotlin.math.absoluteValue
 
 open class Character(var name: String) {
 
-    var currentHP = 500
-        set(value) {
-            field =
-                if (field < 0)
-                    0
-                else value
-        }
-
-    var maxHP = currentHP
+    var maxHP = 500
+    var currentHP = maxHP
     var critChance = 5
-    var physischeResistenz = 10
-    var magischeResistenz = 10
+    var defense = 10
+    var magicDefense = 10
     var strength = 1
     var intelligence = 1
+
+
+    fun isAlive() = currentHP > 0
+
 
     fun criticalHit(schaden: Int): Int {
 
@@ -27,13 +23,16 @@ open class Character(var name: String) {
         } else
             schaden
     }
+    fun takeDmg(dmg: Int) {
+        currentHP -= dmg
+        if (currentHP < 0)
+            currentHP = 0
+    }
 
-    fun isAlive() = currentHP > 0
-
-    open fun turn() = println("${this.name} ist an der Reihe.\n")
-
-    fun takeDmg(dmg: Int) = currentHP - dmg
     fun heal(hp: Int) = currentHP + hp
 
+    fun printInfo() =
+        println("${this.name} HP: ${this.maxHP} Str: ${this.strength} Int: ${this.intelligence} Crit: ${this.critChance}% Def: ${this.defense} MagDef: ${this.magicDefense}")
 
+    fun printHP() = println("${this.name}: ${this.currentHP}/${this.maxHP}HP")
 }
