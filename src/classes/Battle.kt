@@ -1,12 +1,9 @@
 package classes
 
 import classes.character.Team
-import classes.character.gegner.Gegner
-import classes.character.held.Held
-import classes.utils.toGegnerList
-import classes.utils.toHeldList
+import classes.character.held.HeldenTeam
 
-class Battle(private var heldenTeam: Team, private var gegnerTeam: Team) {
+class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
 
     private var runde = 1
 
@@ -23,32 +20,13 @@ class Battle(private var heldenTeam: Team, private var gegnerTeam: Team) {
     private fun turn() {
         printRunde()
 
-        var attackerTeam = heldenTeam
-        var defenderTeam = gegnerTeam
+        heldenTeam.attack(gegnerTeam)
+        gegnerTeam.attack(heldenTeam)
+        println("---------------------------------------------\n")
 
-        repeat(2) {
-            for (attacker in attackerTeam.getTeam()) {
-                if (!defenderTeam.isTeamDead()) {
-                    if (attacker.isAlive()) {
-                        println("${attacker.name} ist an der Reihe.\n")
 
-                        when (attacker) {
-                            is Held -> attacker.attack(toGegnerList(defenderTeam.getTeam()))
-                            is Gegner -> attacker.attack(toHeldList(defenderTeam.getTeam()))
-                            else -> throw Exception("Es können nur Helden oder Gegner angreifen")
-                        }
-
-                    } else
-                        continue
-                } else {
-                    break
-                }
-            }
-            attackerTeam = defenderTeam.also { defenderTeam = attackerTeam }
-            printTeamHP()
-            printWinner()
-        }
-
+        printTeamHP()
+        printWinner()
 
     }
 

@@ -3,11 +3,10 @@ package classes.utils
 import classes.character.Character
 import classes.character.gegner.Gegner
 import classes.character.held.*
-import java.util.logging.Logger
 
-fun hauptmenue()
-{
-    println("""
+fun hauptmenue() {
+    println(
+        """
    ______                       __        ______            __                  
   / ____/___  ____  _________  / /__     / ____/___ _____  / /_____ ________  __
  / /   / __ \/ __ \/ ___/ __ \/ / _ \   / /_  / __ `/ __ \/ __/ __ `/ ___/ / / /
@@ -16,7 +15,8 @@ fun hauptmenue()
                                                                        /____/   
 
 
-    """.trimIndent())
+    """.trimIndent()
+    )
 }
 
 // TODO finish mit Skill Parameter

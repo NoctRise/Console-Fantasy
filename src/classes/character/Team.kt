@@ -1,5 +1,9 @@
 package classes.character
 
+import classes.character.gegner.Gegner
+import classes.character.held.HeldenTeam
+import classes.utils.getUserInput
+
 
 open class Team() {
     protected var teamMitglieder = mutableListOf<Character>()
@@ -16,6 +20,8 @@ open class Team() {
     fun teamBeitreten(character: Character) {
         if (teamMitglieder.size < maxMitglieder)
             teamMitglieder.add(character)
+        else
+            throw Exception("Gegnerteam kann nur aus $maxMitglieder Mitgliedern bestehen!")
     }
 
     fun isTeamDead(): Boolean {
@@ -38,9 +44,39 @@ open class Team() {
         }
     }
 
-    fun getTeam(): MutableList<Character> {
-        return teamMitglieder
+    fun chooseGegner(): Gegner {
+        println("Wähle Gegner:")
+        val gegner = getGegnerTeam()
+        gegner.indices.forEach {
+            println("[${it + 1}] ${gegner[it].name} ")
+        }
+
+        return gegner[getUserInput(max = gegner.size) - 1]
     }
 
+    fun getGegnerTeam(): MutableList<Gegner> {
+        val gegnerList = mutableListOf<Gegner>()
+        teamMitglieder.forEach {
+            gegnerList.add(it as Gegner)
+        }
+        return gegnerList
+    }
+
+
+    fun attack(heldenTeam: HeldenTeam) {
+
+        for (gegner in getGegnerTeam()) {
+            if (!heldenTeam.isTeamDead()) {
+                if (gegner.isAlive()) {
+                    println("${gegner.name} ist an der Reihe.\n")
+                    gegner.attack((heldenTeam.getHeldenTeam()))
+
+                } else
+                    continue
+            } else {
+                break
+            }
+        }
+    }
 }
 

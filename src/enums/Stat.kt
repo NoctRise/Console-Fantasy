@@ -1,0 +1,5 @@
+package enums
+
+enum class Stat {
+    MAXHP, CRITCHANCE, DEFENSE, MAGICDEFENSE, STRENGTH, INTELLIGENCE
+}

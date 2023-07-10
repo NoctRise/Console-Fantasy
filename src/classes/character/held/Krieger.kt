@@ -1,10 +1,10 @@
 package classes.character.held
 
+import classes.Skill
 import classes.character.gegner.Gegner
-import classes.utils.chooseEnemy
-import classes.utils.getUserInput
+import classes.utils.getRandomName
 
-class Krieger(name: String) : Held(name) {
+class Krieger(name: String= getRandomName()) : Held(name) {
 
     init {
         this.maxHP = 800
@@ -15,41 +15,28 @@ class Krieger(name: String) : Held(name) {
         this.strength = 150
         this.intelligence = 20
         this.klasse = "Krieger"
-    }
-
-    override fun attack(gegnerListe: List<Gegner>) {
-        println(
-            """
-            [1] Schwerthieb 
-            [2] Flammenschwert 
-            [3] Excalibur 
-            [4] Doppeltklinge 
-            
-        """.trimIndent()
+        this.skillListe = mutableListOf(
+            Skill("Flammenschwert"),
+            Skill("Chaosklinge"),
+            Skill("Doppelklinge"),
+            Skill("Excalibur")
         )
-
-        val skill = getUserInput(max = 4)
-        val target =
-            if (gegnerListe.size > 1) {
-                chooseEnemy(gegnerListe)
-            } else {
-                gegnerListe.first()
-            }
-
-
-        when (skill) {
-            1 -> schwertHieb(target)
-            2 -> flammenSchwert(target)
-            3 -> excalibur(target)
-            4 -> doppeltKlinge(target)
-        }
-        Thread.sleep(1000)
-
     }
 
 
-    fun schwertHieb(gegner: Gegner) {
-        println("${this.name} setzt Schwerthieb auf ${gegner.name} ein!")
+    override fun useATKSkill(skill: Skill, gegner: Gegner) {
+        when (skill.name) {
+            "Chaosklinge" -> chaosklinge(gegner)
+            "Flammenschwert" -> flammenSchwert(gegner)
+            "Excalibur" -> excalibur(gegner)
+            "Doppelklinge" -> doppeltKlinge(gegner)
+            else -> println("Besitzt diesen Skill nicht")
+        }
+
+    }
+
+    fun chaosklinge(gegner: Gegner) {
+        println("${this.name} setzt Chaosklinge auf ${gegner.name} ein!")
 
         Thread.sleep(1000)
 

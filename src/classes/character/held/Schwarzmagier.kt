@@ -1,10 +1,10 @@
 package classes.character.held
 
+import classes.Skill
 import classes.character.gegner.Gegner
-import classes.utils.chooseEnemy
-import classes.utils.getUserInput
+import classes.utils.getRandomName
 
-class Schwarzmagier(name: String) : Held(name) {
+class Schwarzmagier(name: String = getRandomName()) : Held(name) {
 
 
     init {
@@ -16,35 +16,31 @@ class Schwarzmagier(name: String) : Held(name) {
         this.strength = 20
         this.intelligence = 175
         this.klasse = "Schwarzmagier"
-    }
-
-    override fun attack(gegnerListe: List<Gegner>) {
-
-        println(
-            """
-            [1] Stockhieb 
-            [2] Feuerball 
-            [3] Eissturm 
-            [4] Ultima 
-            
-        """.trimIndent()
+        this.skillListe = mutableListOf(
+            Skill("Stockhieb"),
+            Skill("Feuerball"),
+            Skill("Eissturm"),
+            Skill("Ultima")
         )
 
-        val skill = getUserInput(max = 4)
-        val target =
-            if (gegnerListe.size > 1 && skill != 4) {
-                chooseEnemy(gegnerListe)
-            } else {
-                gegnerListe.first()
-            }
+    }
 
-        when (skill) {
-            1 -> stockHieb(target)
-            2 -> feuerBall(target)
-            3 -> eisSturm(target)
-            4 -> ultima(gegnerListe)
+
+    override fun useATKSkill(skill: Skill, gegner: Gegner) {
+        when (skill.name) {
+            "Stockhieb" -> stockHieb(gegner)
+            "Feuerball" -> feuerBall(gegner)
+            "Eissturm" -> eisSturm(gegner)
+            else -> println("Besitzt diesen Skill nicht")
         }
-        Thread.sleep(1000)
+
+    }
+
+    override fun useATKSKill(skill: Skill, gegnerListe: List<Gegner>) {
+        when (skill.name) {
+            "Ultima" -> ultima(gegnerListe)
+            else -> println("Besitzt diesen Skill nicht")
+        }
     }
 
     fun stockHieb(gegner: Gegner) {
