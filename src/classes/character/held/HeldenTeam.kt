@@ -1,46 +1,33 @@
 package classes.character.held
 
 import classes.Inventar
+import classes.character.Character
+import classes.character.Team
 
-open class HeldenTeam() {
+open class HeldenTeam() : Team() {
 
-    var teamMitglieder = mutableListOf<Held>()
-    var maxMitglieder = 4
     var inventar = Inventar()
 
-    constructor(heldenListe: MutableList<Held>) : this() {
-        if (heldenListe.size <= maxMitglieder)
-            this.teamMitglieder = heldenListe
+    init {
+        this.maxMitglieder = 4
+    }
+
+
+    constructor(teamListe: MutableList<Character>) : this() {
+        if (teamListe.size <= maxMitglieder)
+            this.teamMitglieder = teamListe
         else
             throw Exception("Heldenteam kann nur aus $maxMitglieder Mitgliedern bestehen!")
     }
 
-    constructor(heldenListe: MutableList<Held>, inventar: Inventar) : this(heldenListe) {
+    constructor(heldenListe: MutableList<Character>, inventar: Inventar) : this(heldenListe) {
         this.inventar = inventar
     }
 
 
-    fun teamBeitreten(held: Held) {
-        if (teamMitglieder.size < maxMitglieder)
-            teamMitglieder.add(held)
-    }
-
-    fun isTeamDead(): Boolean {
-        teamMitglieder.forEach {
-            if (it.isAlive())
-                return false
-        }
-        return true
-    }
-
-    fun printTeam() {
-        teamMitglieder.forEach {
-            it.printInfo()
-        }
-    }
-
     fun useInventory() {
         // TODO
     }
+
 }
 

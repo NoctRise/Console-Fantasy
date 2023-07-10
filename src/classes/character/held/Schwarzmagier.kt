@@ -15,6 +15,7 @@ class Schwarzmagier(name: String) : Held(name) {
         this.magicDefense = 30
         this.strength = 20
         this.intelligence = 175
+        this.klasse = "Schwarzmagier"
     }
 
     override fun attack(gegnerListe: List<Gegner>) {
@@ -54,15 +55,16 @@ class Schwarzmagier(name: String) : Held(name) {
         /*
         Base Dmg 100
         (strength / 100.0) berechne Multiplikator anhand des Attributs strength
-        (100 - gegner.physischeResistenz) / 100.0) berechne Classes.Gegner Resistenz, um Schaden zu verringern
+        (100 - gegner.physischeResistenz) / 100.0) berechne die Gegner Resistenz, um Schaden zu verringern
         */
         val baseDmg = ((100 * (strength / 100.0)) * ((100 - gegner.defense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
+        println("${gegner.name} verliert $finalDmg HP.")
 
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 
     fun feuerBall(gegner: Gegner) {
@@ -74,9 +76,10 @@ class Schwarzmagier(name: String) : Held(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
+        println("${gegner.name} verliert $finalDmg HP.")
 
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 
     fun eisSturm(gegner: Gegner) {
@@ -88,9 +91,9 @@ class Schwarzmagier(name: String) : Held(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
-
+        println("${gegner.name} verliert $finalDmg HP.")
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 
     fun ultima(gegner: List<Gegner>) {
@@ -105,7 +108,9 @@ class Schwarzmagier(name: String) : Held(name) {
 
             it.takeDmg(finalDmg)
             println("${it.name} verliert $finalDmg HP.")
+            println(it)
             Thread.sleep(1000)
+            println()
         }
         println()
     }

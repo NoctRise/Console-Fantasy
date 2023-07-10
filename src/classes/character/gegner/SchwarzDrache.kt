@@ -25,9 +25,11 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${held.name} verliert $finalDmg HP.\n")
+        println("${held.name} verliert $finalDmg HP.")
 
         held.takeDmg(finalDmg)
+        println(held)
+        println()
 
     }
 
@@ -41,9 +43,12 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${held.name} verliert $finalDmg HP.\n")
+        println("${held.name} verliert $finalDmg HP.")
 
         held.takeDmg(finalDmg)
+        println(held)
+        println()
+
     }
 
 
@@ -57,23 +62,24 @@ class SchwarzDrache(name: String = "Schwarz Drache") : Boss(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${held.name} verliert $finalDmg HP.\n")
+        println("${held.name} verliert $finalDmg HP.")
 
         held.takeDmg(finalDmg)
+        println(held)
+        println()
     }
 
     fun superNova(heldenList: List<Held>) {
+        println("${this.name} setzt Super Nova ein!")
         heldenList.forEach {
-            println("${this.name} setzt Super Nova ein!")
-
             Thread.sleep(1000)
-
 
             val baseDmg = ((350 * (intelligence / 100.0)) * ((100 - it.magicDefense) / 100.0)).toInt()
             val finalDmg = criticalHit(baseDmg)
 
             it.takeDmg(finalDmg)
             println("${it.name} verliert $finalDmg HP.")
+            println(it)
             Thread.sleep(1000)
 
             println()

@@ -1,18 +1,22 @@
 import classes.Battle
-import classes.character.gegner.GegnerTeam
+import classes.character.Team
 import classes.character.held.Krieger
 import classes.character.gegner.SchwarzDrache
-import classes.character.held.HeldenTeam
 import classes.character.held.Schwarzmagier
-import classes.utils.createTeam
+import classes.character.held.Weissmagier
+import classes.utils.getBalancedTeam
 
 
 fun main() {
 
-    val heldenTeam = createTeam()
-    val gegnerTeam = GegnerTeam(mutableListOf(SchwarzDrache()))
 
-    val battle = Battle(heldenTeam, gegnerTeam)
+    val gegnerTeam = Team()
+    gegnerTeam.teamBeitreten(SchwarzDrache())
+    gegnerTeam.teamBeitreten(SchwarzDrache())
+    gegnerTeam.teamBeitreten(SchwarzDrache())
+    gegnerTeam.teamBeitreten(SchwarzDrache())
+
+    val battle = Battle(getBalancedTeam(), gegnerTeam)
     battle.startBattle()
 
 }

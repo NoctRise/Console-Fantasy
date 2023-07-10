@@ -23,6 +23,7 @@ open class Character(var name: String) {
         } else
             schaden
     }
+
     fun takeDmg(dmg: Int) {
         currentHP -= dmg
         if (currentHP < 0)
@@ -34,5 +35,9 @@ open class Character(var name: String) {
     fun printInfo() =
         println("${this.name} HP: ${this.maxHP} Str: ${this.strength} Int: ${this.intelligence} Crit: ${this.critChance}% Def: ${this.defense} MagDef: ${this.magicDefense}")
 
-    fun printHP() = println("${this.name}: ${this.currentHP}/${this.maxHP}HP")
+    open fun printHP() = println("${this.name}: ${this.currentHP}HP/${this.maxHP}HP")
+
+    override fun toString(): String {
+        return "${this.name}: ${this.currentHP}HP/${this.maxHP}HP"
+    }
 }

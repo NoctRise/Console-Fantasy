@@ -1,9 +1,9 @@
 package classes
 
-import java.lang.Exception
+import classes.utils.getUserInput
 
 class Inventar {
-    var inventarItems = mutableListOf<Item>( )
+    var inventarItems = mutableListOf<Item>()
 
 
     fun showItemMenu() {
@@ -12,18 +12,16 @@ class Inventar {
         }
         println("[0] Zurück")
 
-        var eingabe: Int
-        try {
-            do {
-                println("Welches Item möchten sie nutzen?")
-                eingabe = readln().toInt()
-            } while (eingabe !in inventarItems.indices)
-        } catch (e: Exception) {
-            println("Es sind nur Eingaben 0-${inventarItems.lastIndex} möglich.")
-        }
+        println("Welches Item möchten sie nutzen?")
 
+        val item = getUserInput(max = inventarItems.size)
 
+        // TODO zuende schreiben
     }
 
+    fun useItem()
+    {
+
+    }
 
 }

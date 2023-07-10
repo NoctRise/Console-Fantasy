@@ -1,10 +1,14 @@
 package classes
 
-import classes.character.gegner.GegnerTeam
-import classes.character.held.HeldenTeam
+import classes.character.Team
+import classes.character.gegner.Gegner
+import classes.character.held.Held
+import classes.utils.toGegnerList
+import classes.utils.toHeldList
 
-class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: GegnerTeam) {
+class Battle(private var heldenTeam: Team, private var gegnerTeam: Team) {
 
+    private var runde = 1
 
     fun startBattle() {
         println("-Kampf startet-\n")
@@ -12,56 +16,60 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: GegnerT
 
         while (!heldenTeam.isTeamDead() && !gegnerTeam.isTeamDead()) {
 
-            for (held in heldenTeam.teamMitglieder) {
-                if (!gegnerTeam.isTeamDead()) {
-                    if (held.isAlive()) {
-                        println("${held.name} ist an der Reihe.")
-                        held.attack(gegnerTeam.teamMitglieder)
-                        printTeamHP()
-                    } else
-                        continue
-                } else
-                    break
-            }
-
-
-
-            if (gegnerTeam.isTeamDead()) {
-                println("Alle Gegner wurden bezwungen!")
-                break
-            }
-
-            for (gegner in gegnerTeam.teamMitglieder) {
-                if (!heldenTeam.isTeamDead()) {
-
-                    if (gegner.isAlive()) {
-                        println("${gegner.name} ist an der Reihe.")
-                        gegner.attack(heldenTeam.teamMitglieder)
-                    } else
-                        continue
-
-                } else
-                    break
-            }
-
-            printTeamHP()
-
-            if (heldenTeam.isTeamDead()) {
-                println("Game Over!")
-                break
-            }
+            turn()
         }
+    }
+
+    private fun turn() {
+        printRunde()
+
+        var attackerTeam = heldenTeam
+        var defenderTeam = gegnerTeam
+
+        repeat(2) {
+            for (attacker in attackerTeam.getTeam()) {
+                if (!defenderTeam.isTeamDead()) {
+                    if (attacker.isAlive()) {
+                        println("${attacker.name} ist an der Reihe.\n")
+
+                        when (attacker) {
+                            is Held -> attacker.attack(toGegnerList(defenderTeam.getTeam()))
+                            is Gegner -> attacker.attack(toHeldList(defenderTeam.getTeam()))
+                            else -> throw Exception("Es können nur Helden oder Gegner angreifen")
+                        }
+
+                    } else
+                        continue
+                } else {
+                    break
+                }
+            }
+            attackerTeam = defenderTeam.also { defenderTeam = attackerTeam }
+            printTeamHP()
+            printWinner()
+        }
+
 
     }
 
     private fun printTeamHP() {
-        println("Helden")
-        heldenTeam.teamMitglieder.forEach { it.printHP() }
+        println("-Helden-")
+        heldenTeam.printTeamHP()
 
-        println("\nGegner")
-        gegnerTeam.teamMitglieder.forEach { it.printHP() }
+        println("\n-Gegner-")
+        gegnerTeam.printTeamHP()
         println()
     }
 
+    private fun printRunde() {
+        println("Runde $runde beginnt.")
+        runde++
+    }
 
+    fun printWinner() {
+        when {
+            heldenTeam.isTeamDead() -> println("Game Over.")
+            gegnerTeam.isTeamDead() -> println("Sieg!")
+        }
+    }
 }

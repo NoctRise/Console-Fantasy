@@ -14,6 +14,7 @@ class Krieger(name: String) : Held(name) {
         this.magicDefense = 5
         this.strength = 150
         this.intelligence = 20
+        this.klasse = "Krieger"
     }
 
     override fun attack(gegnerListe: List<Gegner>) {
@@ -56,9 +57,10 @@ class Krieger(name: String) : Held(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
+        println("${gegner.name} verliert $finalDmg HP.")
 
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 
     fun flammenSchwert(gegner: Gegner) {
@@ -66,13 +68,14 @@ class Krieger(name: String) : Held(name) {
 
         Thread.sleep(1000)
 
-        val baseDmg = ((125 * (intelligence / 100.0)) * ((100 - gegner.magicDefense) / 100.0)).toInt()
+        val baseDmg = ((150 * (intelligence / 100.0)) * ((100 - gegner.magicDefense) / 100.0)).toInt()
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
+        println("${gegner.name} verliert $finalDmg HP.")
 
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 
     fun excalibur(gegner: Gegner) {
@@ -84,9 +87,10 @@ class Krieger(name: String) : Held(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
+        println("${gegner.name} verliert $finalDmg HP.")
 
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 
     fun doppeltKlinge(gegner: Gegner) {
@@ -98,8 +102,9 @@ class Krieger(name: String) : Held(name) {
 
         val finalDmg = criticalHit(baseDmg)
 
-        println("${gegner.name} verliert $finalDmg HP.\n")
+        println("${gegner.name} verliert $finalDmg HP.")
 
         gegner.takeDmg(finalDmg)
+        println(gegner)
     }
 }
