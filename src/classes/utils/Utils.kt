@@ -1,8 +1,10 @@
 package classes.utils
 
+import classes.misc.Skill
 import classes.character.Character
 import classes.character.gegner.Gegner
 import classes.character.held.*
+import enums.SkillType
 
 fun hauptmenue() {
     println(
@@ -19,9 +21,17 @@ fun hauptmenue() {
     )
 }
 
-// TODO finish mit Skill Parameter
-fun calculateDmg(attacker: Character, defender: Character): Int {
-    val schaden = ((100 * (attacker.strength / 100.0)) * ((100 - defender.defense) / 100.0)).toInt()
+/*
+ Berechnet den endgültigen Schaden, der abgezogen wird
+ SkillDmg x (Stat / 100)            x             ((100 - defense)/100)
+             ^ Dmg erhöhen                          ^ Dmg verrringern
+*/
+fun calculateDmg(attacker: Character, defender: Character, skill: Skill): Int {
+    val schaden =
+        if (skill.skillType == SkillType.PHY)
+            (skill.skillValue * (attacker.strength / 100.0) * ((100 - defender.defense) / 100.0)).toInt()
+        else
+            (skill.skillValue * (attacker.intelligence / 100.0) * ((100 - defender.magicDefense) / 100.0)).toInt()
 
     return if ((1..100).random() <= attacker.critChance) {
         println("Kritischer Treffer!")
@@ -30,17 +40,22 @@ fun calculateDmg(attacker: Character, defender: Character): Int {
         schaden
 }
 
-// TODO finish mit Skill Parameter
-fun printSkillLog(attacker: Character, defender: Character) {
-    println("${attacker.name} setzt Stockhieb auf ${defender.name} ein!")
+fun printDPSSkillLog(attacker: Character, defender: Character, skill: Skill) {
 
-    Thread.sleep(1000)
+    if (!defender.hasShield) {
+        val dmg = calculateDmg(attacker, defender, skill)
 
-    val dmg = calculateDmg(attacker, defender)
+        println("${attacker.name} fügt ${defender.name} $dmg Schaden mit ${skill.name} zu.")
+        defender.takeDmg(dmg)
+        println(defender)
+    } else {
+        println("${defender.name}'s Shield blockierte ${skill.name} von ${attacker.name} ab.")
+        defender.hasShield = false
+    }
 
-    println("${attacker.name} fügt ${defender.name} $dmg Schaden ein.\n")
 
-    defender.takeDmg(dmg)
+    println()
+    Thread.sleep(1500)
 }
 
 
@@ -63,7 +78,7 @@ fun getUserInput(min: Int = 1, max: Int): Int {
 
 fun createTeam(): HeldenTeam {
     val heldenTeam = HeldenTeam()
-    val charListe = listOf("Krieger", "Schwarzmagier", "Weissmagier")
+    val charListe = listOf("Dunkelritter", "Schwarzmagier", "Weissmagier")
 
     repeat(3)
     {
@@ -77,9 +92,9 @@ fun createTeam(): HeldenTeam {
         val index = getUserInput(1, 3)
 
         when (index) {
-            1 -> heldenTeam.teamBeitreten(Krieger(getRandomName()))
-            2 -> heldenTeam.teamBeitreten(Schwarzmagier(getRandomName()))
-            3 -> heldenTeam.teamBeitreten(Weissmagier(getRandomName()))
+            1 -> heldenTeam.teamBeitreten(DunkelRitter(getRandomName()))
+            2 -> heldenTeam.teamBeitreten(SchwarzMagier(getRandomName()))
+            3 -> heldenTeam.teamBeitreten(WeissMagier(getRandomName()))
         }
         println("${charListe[index - 1]} erfolgreich erstellt.\n")
     }
@@ -89,39 +104,12 @@ fun createTeam(): HeldenTeam {
 fun getBalancedTeam(): HeldenTeam {
     return HeldenTeam(
         mutableListOf(
-            Krieger(getRandomName()),
-            Schwarzmagier(getRandomName()),
-            Weissmagier(getRandomName())
+            DunkelRitter(getRandomName()),
+            SchwarzMagier(getRandomName()),
+            WeissMagier(getRandomName())
         )
     )
 }
-
-
-fun chooseEnemy(gegner: List<Gegner>): Gegner {
-    println("Welchen Gegner möchtest du angreifen?")
-    gegner.indices.forEach {
-        println("[${it + 1}] ${gegner[it].name}")
-    }
-    return gegner[getUserInput(max = gegner.size) - 1]
-}
-
-fun toGegnerList(characterList: List<Character>): MutableList<Gegner> {
-    val gegnerList = mutableListOf<Gegner>()
-    characterList.forEach {
-        gegnerList.add(it as Gegner)
-    }
-
-    return gegnerList
-}
-
-fun toHeldList(characterList: List<Character>): MutableList<Held> {
-    val heldenList = mutableListOf<Held>()
-    characterList.forEach {
-        heldenList.add(it as Held)
-    }
-    return heldenList
-}
-
 
 fun getRandomName(): String {
     return listOf(

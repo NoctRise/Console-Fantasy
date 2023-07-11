@@ -1,4 +1,4 @@
-package classes
+package classes.misc
 
 import classes.character.held.Held
 import enums.Stat
@@ -16,16 +16,20 @@ class Potion() : Item() {
 
             "Stärkungstrank" -> {
                 this.name = name
-                this.beschreibung = "Dies ist ein Trank, der den physischen Angriff erhöht"
+                this.beschreibung = "Dies ist ein Trank, der den physischen Angriff erhöht."
                 this.value = 15
             }
 
             "Intelligenztrank" -> {
                 this.name = name
-                this.beschreibung = "Dies ist ein Trank, der den magischen Angriff erhöht"
+                this.beschreibung = "Dies ist ein Trank, der den magischen Angriff erhöht."
                 this.value = 15
             }
 
+            "Allheilmittel" -> {
+                this.name = name
+                this.beschreibung = "Dies ist ein Trank, welcher fast jeden negativen Zustand entfernt."
+            }
         }
     }
 
@@ -42,14 +46,21 @@ class Potion() : Item() {
                 println("${held.name} wird um ${this.value} geheilt.")
                 println(held)
             }
+
             "Stärkungstrank" -> {
                 held.buff(Stat.STRENGTH, this.value)
                 println("${held.name}'s Strength steigt um ${this.value}.")
             }
+
             "Intelligenztrank" -> {
                 held.buff(Stat.INTELLIGENCE, this.value)
                 println("${held.name}'s Intelligence steigt um ${this.value}.")
             }
+
+            "Allheilmittel" -> {
+                held.isPoisoned = false
+            }
+
         }
         this.anzahl--
         Thread.sleep(1500)

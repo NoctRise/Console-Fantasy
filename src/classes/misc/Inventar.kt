@@ -1,12 +1,12 @@
-package classes
+package classes.misc
 
 import classes.utils.getUserInput
 
-class Inventar {
+class Inventar() {
     var inventarItems = mutableListOf<Item>()
 
 
-    constructor(inventarItems: MutableList<Item>) {
+    constructor(inventarItems: MutableList<Item>) : this() {
         this.inventarItems = inventarItems
     }
 
@@ -20,7 +20,7 @@ class Inventar {
             println("[${it + 1}] ${inventarItems[it].name}, ${inventarItems[it].anzahl} übrig")
         }
 
-        println("Welches Item möchten sie nutzen?")
+        println("\nWelches Item möchten sie nutzen?")
         val userInput = getUserInput(max = inventarItems.size) - 1
 
         return inventarItems[userInput]

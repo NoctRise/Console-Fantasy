@@ -1,4 +1,4 @@
-package classes
+package classes.misc
 
 import enums.SkillTargeted
 import enums.SkillType
@@ -17,7 +17,7 @@ class Skill {
         this.skillValue = 0
         this.skillTargeted = SkillTargeted.ENEMY
         this.skillType = SkillType.NEUTRAL
-        this.isAoe =  false
+        this.isAoe = false
     }
 
 
@@ -29,28 +29,24 @@ class Skill {
             "Stockhieb" -> {
                 this.name = name
                 this.skillValue = 100
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.PHY
             }
 
             "Feuerball" -> {
                 this.name = name
                 this.skillValue = 125
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.MAG
             }
 
             "Eissturm" -> {
                 this.name = name
                 this.skillValue = 200
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.MAG
             }
 
             "Ultima" -> {
                 this.name = name
                 this.skillValue = 350
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.MAG
                 this.isAoe = true
             }
@@ -59,7 +55,6 @@ class Skill {
             "Basic Attack" -> {
                 this.name = name
                 this.skillValue = 90
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.MAG
             }
 
@@ -81,66 +76,92 @@ class Skill {
                 this.skillTargeted = SkillTargeted.ALLY
             }
 
-            // Krieger Skills
-            "Flammenschwert" -> {
+            // Dunkelritter Skills
+            "Shield" -> {
                 this.name = name
-                this.skillValue = 200
-                this.skillTargeted = SkillTargeted.ENEMY
-                this.skillType = SkillType.MAG
+                this.skillTargeted = SkillTargeted.ALLY
             }
 
             "Chaosklinge" -> {
                 this.name = name
                 this.skillValue = 150
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.PHY
             }
 
             "Doppelklinge" -> {
                 this.name = name
                 this.skillValue = 175
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.PHY
             }
 
             "Excalibur" -> {
                 this.name = name
                 this.skillValue = 250
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.PHY
 
             }
 
-            // Schwarzdrache Skills
+            // Bahamut Skills
             "Drachenklaue" -> {
                 this.name = name
-                this.skillValue = 100
-                this.skillTargeted = SkillTargeted.ENEMY
+                this.skillValue = 75
                 this.skillType = SkillType.PHY
             }
 
             "Feueratem" -> {
                 this.name = name
-                this.skillValue = 100
-                this.skillTargeted = SkillTargeted.ENEMY
+                this.skillValue = 90
                 this.skillType = SkillType.MAG
             }
 
             "Schwanzhieb" -> {
                 this.name = name
                 this.skillValue = 100
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.PHY
+            }
+
+            "Poison Strike" -> {
+                this.name = name
+                this.skillValue = 10
+                this.skillType = SkillType.MAG
+            }
+
+            "Summon" -> {
+                this.name = name
+                this.skillTargeted = SkillTargeted.ALLY
             }
 
             "Supernova" -> {
                 this.name = name
                 this.skillValue = 250
-                this.skillTargeted = SkillTargeted.ENEMY
                 this.skillType = SkillType.MAG
                 this.isAoe = true
             }
 
+            // Wyvern Skills
+            "Biss" -> {
+                this.name = name
+                this.skillValue = 95
+                this.skillType = SkillType.PHY
+            }
+
+            "Blizzard" -> {
+                this.name = name
+                this.skillValue = 120
+                this.skillType = SkillType.MAG
+            }
+
+            "Eis Atem" -> {
+                this.name = name
+                this.skillValue = 100
+                this.skillType = SkillType.MAG
+            }
+
+            "Blaue Flamme" -> {
+                this.name = name
+                this.skillValue = 150
+                this.skillType = SkillType.MAG
+            }
 
             else -> throw Exception("Unbekannter Skill.")
         }

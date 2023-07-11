@@ -1,11 +1,12 @@
 package classes.character.held
 
-import classes.Skill
+import classes.misc.Skill
 import classes.character.gegner.Gegner
 import classes.utils.getRandomName
+import classes.utils.printDPSSkillLog
 import enums.Stat
 
-class Weissmagier(name: String = getRandomName()) : Held(name) {
+class WeissMagier(name: String = getRandomName()) : Held(name) {
 
 
     init {
@@ -43,17 +44,7 @@ class Weissmagier(name: String = getRandomName()) : Held(name) {
     }
 
     fun basicAttack(gegner: Gegner) {
-        println("${this.name} setzt Basic Attack auf ${gegner.name} ein!")
-
-        Thread.sleep(1000)
-
-        val baseDmg = ((90 * (strength / 100.0)) * ((100 - gegner.defense) / 100.0)).toInt()
-
-        val finalDmg = criticalHit(baseDmg)
-
-        println("${gegner.name} verliert $finalDmg HP.\n")
-
-        gegner.takeDmg(finalDmg)
+        printDPSSkillLog(this, gegner, skillListe[0])
     }
 
     fun atkBuff(held: Held) {

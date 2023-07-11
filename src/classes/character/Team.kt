@@ -18,11 +18,14 @@ open class Team() {
     }
 
     fun teamBeitreten(character: Character) {
-        if (teamMitglieder.size < maxMitglieder)
+        if (!isFull())
             teamMitglieder.add(character)
         else
             throw Exception("Gegnerteam kann nur aus $maxMitglieder Mitgliedern bestehen!")
     }
+
+    fun isFull() = teamMitglieder.size == maxMitglieder
+
 
     fun isTeamDead(): Boolean {
         teamMitglieder.forEach {
@@ -30,12 +33,6 @@ open class Team() {
                 return false
         }
         return true
-    }
-
-    fun printTeamInfo() {
-        teamMitglieder.forEach {
-            it.printInfo()
-        }
     }
 
     fun printTeamHP() {
@@ -46,7 +43,7 @@ open class Team() {
 
     fun chooseGegner(): Gegner {
         println("Wähle Gegner:")
-        val gegner = getGegnerTeam()
+        val gegner = getGegnerTeam().filter { it.isAlive() }
         gegner.indices.forEach {
             println("[${it + 1}] ${gegner[it].name} ")
         }
@@ -62,14 +59,14 @@ open class Team() {
         return gegnerList
     }
 
-
     fun attack(heldenTeam: HeldenTeam) {
 
         for (gegner in getGegnerTeam()) {
             if (!heldenTeam.isTeamDead()) {
                 if (gegner.isAlive()) {
                     println("${gegner.name} ist an der Reihe.\n")
-                    gegner.attack((heldenTeam.getHeldenTeam()))
+                    gegner.attack((heldenTeam.getHeldenTeam().filter { it.isAlive() }), this)
+                    Thread.sleep(1000)
 
                 } else
                     continue

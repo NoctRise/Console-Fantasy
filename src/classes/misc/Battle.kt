@@ -1,4 +1,4 @@
-package classes
+package classes.misc
 
 import classes.character.Team
 import classes.character.held.HeldenTeam
@@ -15,6 +15,7 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
 
             turn()
         }
+        printWinner()
     }
 
     private fun turn() {
@@ -24,9 +25,7 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
         gegnerTeam.attack(heldenTeam)
         println("---------------------------------------------\n")
 
-
         printTeamHP()
-        printWinner()
 
     }
 
@@ -40,7 +39,7 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
     }
 
     private fun printRunde() {
-        println("Runde $runde beginnt.")
+        println("- Runde $runde -")
         runde++
     }
 

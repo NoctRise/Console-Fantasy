@@ -1,6 +1,6 @@
 package classes.character.held
 
-import classes.Skill
+import classes.misc.Skill
 import classes.character.Character
 import classes.character.gegner.Gegner
 import classes.utils.getUserInput
@@ -8,13 +8,7 @@ import classes.utils.getUserInput
 open class Held(name: String) : Character(name) {
 
     protected var klasse: String = "Held"
-    protected var skillListe = mutableListOf<Skill>()
 
-    fun printSkills() {
-        skillListe.indices.forEach {
-            println("[${it + 1}] ${skillListe[it].name}")
-        }
-    }
 
     fun chooseSkill(): Skill {
         printSkills()
@@ -23,15 +17,16 @@ open class Held(name: String) : Character(name) {
     }
 
     open fun useATKSkill(skill: Skill, gegner: Gegner) {}
-    open fun useATKSKill(skill: Skill, gegnerListe: List<Gegner>) {}
 
     open fun useAllySkill(skill: Skill, held: Held) {}
 
 
     override fun toString(): String {
-        return "${this.name} [${this.klasse}]: ${this.currentHP}HP/${this.maxHP}HP"
-    }
+        val text = super.toString().split(":")
+        val newText = text[0] + " [${this.klasse}]: " + text[1]
 
+        return newText
+    }
 
 
 }

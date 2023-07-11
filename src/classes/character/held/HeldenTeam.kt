@@ -1,26 +1,18 @@
 package classes.character.held
 
-import classes.Inventar
-import classes.Potion
+import classes.misc.Inventar
 import classes.character.Character
 import classes.character.Team
+import classes.misc.Skill
 import classes.utils.getUserInput
 import enums.SkillTargeted
 
 open class HeldenTeam() : Team() {
 
-    var inventar: Inventar
+    var inventar = Inventar()
 
     init {
         this.maxMitglieder = 4
-        this.inventar = Inventar(
-            mutableListOf(
-                Potion("Heiltrank", 3),
-                Potion("Stärkungstrank", 1),
-                Potion("Intelligenztrank", 2)
-
-            )
-        )
     }
 
 
@@ -60,6 +52,18 @@ open class HeldenTeam() : Team() {
             if (!gegnerTeam.isTeamDead()) {
                 if (held.isAlive()) {
                     println("\n${held.name} ist an der Reihe.\n")
+                    if (held.isPoisoned) {
+
+                        val poisonDmg = (held.maxHP * (Skill("Poison Strike").skillValue / 100.0)).toInt()
+                        println("${held.name} nimmt $poisonDmg Schaden wegen Poison.")
+
+                        held.takeDmg(poisonDmg)
+                        println(held)
+
+                        if (!held.isAlive())
+                            continue
+                    }
+
                     var eingabe = 1
 
                     if (inventar.inventarItems.size > 0) {
@@ -85,18 +89,26 @@ open class HeldenTeam() : Team() {
                                     }
 
                                 } else {
-                                    held.useATKSKill(skill, gegnerTeam.getGegnerTeam())
+                                    gegnerTeam.getGegnerTeam().filter { it.isAlive() }.forEach {
+                                        held.useATKSkill(skill, it)
+                                    }
                                 }
 
                             } else if (skill.skillTargeted == SkillTargeted.ALLY) {
-                                held.useAllySkill(skill, choooseHeld())
+                                if (getHeldenTeam().size > 1)
+                                    held.useAllySkill(skill, choooseHeld())
+                                else
+                                    held.useAllySkill(skill, held)
                             }
                             println()
                         }
 
                         2 -> {
                             val item = inventar.chooseInventarItems()
-                            item.useItem(choooseHeld())
+                            if (getHeldenTeam().filter { it.isAlive() }.size > 1)
+                                item.useItem(choooseHeld())
+                            else
+                                item.useItem(held)
                         }
                     }
 

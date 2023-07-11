@@ -1,5 +1,6 @@
 package classes.character
 
+import classes.misc.Skill
 import enums.Stat
 
 
@@ -12,10 +13,18 @@ open class Character(var name: String) {
     var magicDefense = 10
     var strength = 1
     var intelligence = 1
-
+    protected var skillListe = mutableListOf<Skill>()
+    var hasShield = false
+    var isPoisoned = false
 
     fun isAlive() = currentHP > 0
 
+
+    fun printSkills() {
+        skillListe.indices.forEach {
+            println("[${it + 1}] ${skillListe[it].name}")
+        }
+    }
 
     fun criticalHit(schaden: Int): Int {
 
@@ -28,7 +37,7 @@ open class Character(var name: String) {
 
     fun takeDmg(dmg: Int) {
         currentHP -= dmg
-        if (currentHP < 0)
+        if (currentHP <= 0)
             currentHP = 0
     }
 
@@ -43,7 +52,19 @@ open class Character(var name: String) {
 
 
     override fun toString(): String {
-        return "${this.name}: ${this.currentHP}HP/${this.maxHP}HP"
+        var status = ""
+        if (!this.isAlive()) {
+            status = "☠️"
+        } else {
+            if (this.isPoisoned) {
+                status = "🦠"
+            }
+            if (this.hasShield)
+                status += "🛡️"
+        }
+
+
+        return "${this.name}: ${this.currentHP}HP/${this.maxHP}HP \t$status"
     }
 
     fun buff(stat: Stat, amount: Int) {
@@ -57,12 +78,4 @@ open class Character(var name: String) {
         }
     }
 
-
-    /*fun getMaxHP() = maxHP
-        fun getCurrentHP() = currentHP
-        fun getCritChance() = critChance
-        fun getDefense() = defense
-        fun getMagicDefense() = magicDefense
-        fun getStrength() = strength
-        fun getIntelligence() = intelligence*/
 }
