@@ -7,25 +7,26 @@ import classes.utils.getUserInput
 
 open class Held(name: String) : Character(name) {
 
-    protected var klasse: String = "Held"
+     var klasse: String = "Held"
 
 
+    // lässt den Nutzer einen Skill aus der Skillliste wählen und gibt ihn zurück
     fun chooseSkill(): Skill {
         printSkills()
         println("Welchen Skill willst du einsetzen?")
         return skillListe[getUserInput(max = skillListe.size) - 1]
     }
 
+    //wird genutzt, um Angriffsskills einzusetzen
     open fun useATKSkill(skill: Skill, gegner: Gegner) {}
 
+    //wird genutzt, um Hilfsskills einzusetzen
     open fun useAllySkill(skill: Skill, held: Held) {}
 
 
+    // Fügt der toString Methode die Klasse des Helden hinzu
     override fun toString(): String {
-        val text = super.toString().split(":")
-        val newText = text[0] + " [${this.klasse}]: " + text[1]
-
-        return newText
+        return super.toString().replace(":", " [${this.klasse}]:")
     }
 
 

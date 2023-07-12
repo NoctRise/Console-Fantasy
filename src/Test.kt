@@ -29,8 +29,8 @@ fun main() {
                 mutableListOf(
                     Potion("Heiltrank", 3),
                     Potion("Stärkungstrank", 1),
-                    Potion("Intelligenztrank", 2),
-                    Potion("Allheilmittel", 2)
+                    Potion("Intelligenztrank", 1),
+                    Potion("Allheilmittel", 3)
 
                 )
             )
@@ -39,7 +39,7 @@ fun main() {
         val battle = Battle(heldenTeam, gegnerTeam)
         battle.startBattle()
     } catch (e: Exception) {
-        println(e.message)
+        print(e.message)
     }
 
 

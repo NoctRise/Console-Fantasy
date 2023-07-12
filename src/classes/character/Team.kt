@@ -17,17 +17,21 @@ open class Team() {
             throw Exception("Gegnerteam kann nur aus $maxMitglieder Mitgliedern bestehen!")
     }
 
+    // Lässt Charakter das Team beitreten
     fun teamBeitreten(character: Character) {
+        // Wenn das Team nicht voll ist, füge den Character ein
         if (!isFull())
             teamMitglieder.add(character)
         else
-            throw Exception("Gegnerteam kann nur aus $maxMitglieder Mitgliedern bestehen!")
+            println("Gegnerteam kann nur aus $maxMitglieder Mitgliedern bestehen!")
     }
 
+    // Prüft, ob das Team voll ist
     fun isFull() = teamMitglieder.size == maxMitglieder
 
-
+    // Prüft, ob das gesamte Team tot ist
     fun isTeamDead(): Boolean {
+        // Gehe Liste durch und gibt false aus, wenn einer am Leben ist
         teamMitglieder.forEach {
             if (it.isAlive())
                 return false
@@ -35,12 +39,14 @@ open class Team() {
         return true
     }
 
+    // Printet die HP der Teammitglieder aus
     fun printTeamHP() {
         teamMitglieder.forEach {
             println(it)
         }
     }
 
+    // lässt den User einen Gegner wählen
     fun chooseGegner(): Gegner {
         println("Wähle Gegner:")
         val gegner = getGegnerTeam().filter { it.isAlive() }
@@ -51,6 +57,7 @@ open class Team() {
         return gegner[getUserInput(max = gegner.size) - 1]
     }
 
+    // gibt die Teammitglieder als MutableList<Gegner> zurück
     fun getGegnerTeam(): MutableList<Gegner> {
         val gegnerList = mutableListOf<Gegner>()
         teamMitglieder.forEach {
@@ -59,18 +66,24 @@ open class Team() {
         return gegnerList
     }
 
+    // greift ein Heldenteam an
     fun attack(heldenTeam: HeldenTeam) {
 
-        for (gegner in getGegnerTeam()) {
+        val gegnerListe = getGegnerTeam().filter { it.isAlive() }
+        // Iteriere durch die Gegnerliste
+        for (gegner in gegnerListe) {
+
+            // Wenn das Heldenteam noch nicht tot ist, greife an
             if (!heldenTeam.isTeamDead()) {
-                if (gegner.isAlive()) {
+                // Wenn der derzeitige Gegner (Angreifer) am Leben ist, greife einen Helden an
                     println("${gegner.name} ist an der Reihe.\n")
+
+                    //greife einen lebenden Helden an
                     gegner.attack((heldenTeam.getHeldenTeam().filter { it.isAlive() }), this)
                     Thread.sleep(1000)
 
-                } else
-                    continue
             } else {
+                // Wenn das Heldenteam tot ist, beende Schleife
                 break
             }
         }

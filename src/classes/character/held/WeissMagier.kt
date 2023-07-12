@@ -8,7 +8,7 @@ import enums.Stat
 
 class WeissMagier(name: String = getRandomName()) : Held(name) {
 
-
+    // init der Werte
     init {
         this.maxHP = 600
         this.currentHP = maxHP
@@ -18,6 +18,8 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         this.strength = 40
         this.intelligence = 75
         this.klasse = "Weissmagier"
+
+        // fügt Skills hinzu
         this.skillListe = mutableListOf(
             Skill("Basic Attack"),
             Skill("ATK-Buff"),
@@ -26,6 +28,8 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         )
     }
 
+
+    // führt anhand der Parameter einen Angriffsskill auf einen Gegner aus
     override fun useATKSkill(skill: Skill, gegner: Gegner) {
         when (skill.name) {
             "Basic Attack" -> basicAttack(gegner)
@@ -33,7 +37,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         }
     }
 
-
+    // führt anhand der Parameter einen Hilfsskill auf einen Helden aus
     override fun useAllySkill(skill: Skill, held: Held) {
         when (skill.name) {
             "ATK-Buff" -> atkBuff(held)
@@ -43,40 +47,62 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         }
     }
 
+    // Skill 1, greift einen einzelnen Helden mit einem physischen Skill an und printet es aus
     fun basicAttack(gegner: Gegner) {
         printDPSSkillLog(this, gegner, skillListe[0])
     }
 
+    // Skill 2, erhöht die Werte Strength und Intelligence um den Skillvalue von 'ATK-Buff'
     fun atkBuff(held: Held) {
-        println("${this.name} setzt ATK Buff auf ${held.name} ein!")
-        val buffValue = 25
+        if (held == this) {
+            println("Setzt ATK-Buff auf sich selbst ein!")
+        } else
+        println("${this.name} setzt ATK-Buff auf ${held.name} ein!")
 
-        Thread.sleep(1000)
+        val buffValue = Skill("ATK-Buff").skillValue
+
+        // erhöhe die Stats um Buffvalue
         held.buff(Stat.STRENGTH, buffValue)
         held.buff(Stat.INTELLIGENCE, buffValue)
-        println("${held.name}'s Strength und Intelligence ist um $buffValue gestiegen!")
 
+        println("${held.name}'s Strength und Intelligence ist um $buffValue gestiegen!")
+        Thread.sleep(1000)
     }
 
+    // Skill 3, erhöht die Werte Defense und Magic Defense um den Skillvalue von 'DEF-Buff'
     fun defBuff(held: Held) {
-        println("${this.name} setzt ATK Buff auf ${held.name} ein!")
-        val buffValue = 15
+        if (held == this) {
+            println("Setzt Def-Buff auf sich selbst ein!")
+        } else
+        println("${this.name} setzt Def-Buff auf ${held.name} ein!")
 
-        Thread.sleep(1000)
+        val buffValue = Skill("DEF-Buff").skillValue
+
+        // erhöhe die Stats um Buffvalue
         held.buff(Stat.DEFENSE, buffValue)
         held.buff(Stat.MAGICDEFENSE, buffValue)
+
         println("${held.name}'s Defense und Magic Defense ist um $buffValue gestiegen!")
+        Thread.sleep(1000)
     }
 
 
+    // Skill 4, heilt einen Helden um den Skillvalue von Heal
     fun healAllies(held: Held) {
-        println("${this.name} setzt Heal auf ${held.name} ein!")
+        if (held == this) {
+            println("Setzt Heal auf sich selbst ein!")
+        } else
+            println("${this.name} setzt Heal auf ${held.name} ein!")
 
-        val skill = skillListe[3]
+        val skill = Skill("Heal")
+        // Berechne die % von der MaxHP des Helden
         val healAmount = (held.maxHP * (skill.skillValue / 100.0)).toInt()
 
         println("${held.name} wird um $healAmount geheilt")
+
+        // heilt den Helden um Healamount
         held.heal(healAmount)
         print(held)
+        Thread.sleep(1000)
     }
 }

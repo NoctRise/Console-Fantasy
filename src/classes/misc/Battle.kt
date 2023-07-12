@@ -7,28 +7,33 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
 
     private var runde = 1
 
+    // startet den Kampf
     fun startBattle() {
         println("-Kampf startet-\n")
         printTeamHP()
 
+        // Solange beide Teams am Leben sind, lass sie kämpfen
         while (!heldenTeam.isTeamDead() && !gegnerTeam.isTeamDead()) {
 
-            turn()
+            // Führe ein Kampfrunde aus
+            round()
         }
         printWinner()
     }
 
-    private fun turn() {
+    private fun round() {
         printRunde()
-
+        // Beide Teams greifen an
         heldenTeam.attack(gegnerTeam)
         gegnerTeam.attack(heldenTeam)
         println("---------------------------------------------\n")
 
+        // printe die TeamHP aus
         printTeamHP()
 
     }
 
+    // printe die TeamHP beider Teams aus
     private fun printTeamHP() {
         println("-Helden-")
         heldenTeam.printTeamHP()
@@ -38,11 +43,13 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
         println()
     }
 
+    // printe die derzeitige Runde aus
     private fun printRunde() {
         println("- Runde $runde -")
         runde++
     }
 
+    // Gib den Sieg aus des Teams aus
     fun printWinner() {
         when {
             heldenTeam.isTeamDead() -> println("Game Over.")

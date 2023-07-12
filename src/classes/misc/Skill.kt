@@ -21,6 +21,8 @@ class Skill {
     }
 
 
+    // Skills mit ihren Stats
+
     // Inspiriert von Gordon Lucas
     constructor(name: String) {
         when (name) {
@@ -66,7 +68,7 @@ class Skill {
 
             "DEF-Buff" -> {
                 this.name = name
-                this.skillValue = 20
+                this.skillValue = 15
                 this.skillTargeted = SkillTargeted.ALLY
             }
 

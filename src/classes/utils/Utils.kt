@@ -2,10 +2,10 @@ package classes.utils
 
 import classes.misc.Skill
 import classes.character.Character
-import classes.character.gegner.Gegner
 import classes.character.held.*
 import enums.SkillType
 
+// Gibt das Hauptmenü aus
 fun hauptmenue() {
     println(
         """
@@ -40,6 +40,7 @@ fun calculateDmg(attacker: Character, defender: Character, skill: Skill): Int {
         schaden
 }
 
+// Printet einen Skilllog aus
 fun printDPSSkillLog(attacker: Character, defender: Character, skill: Skill) {
 
     if (!defender.hasShield) {
@@ -59,8 +60,9 @@ fun printDPSSkillLog(attacker: Character, defender: Character, skill: Skill) {
 }
 
 
+// gibt eine Usereingabe zwischen Min und Max zurück
 fun getUserInput(min: Int = 1, max: Int): Int {
-    var eingabe = 0
+    var eingabe = -1
 
     do {
         try {
@@ -76,6 +78,7 @@ fun getUserInput(min: Int = 1, max: Int): Int {
     return eingabe
 }
 
+// Erstellt ein Heldenteam
 fun createTeam(): HeldenTeam {
     val heldenTeam = HeldenTeam()
     val charListe = listOf("Dunkelritter", "Schwarzmagier", "Weissmagier")
@@ -101,6 +104,7 @@ fun createTeam(): HeldenTeam {
     return heldenTeam
 }
 
+// Gibt ein Heldenteam aus allen Klassen zurück
 fun getBalancedTeam(): HeldenTeam {
     return HeldenTeam(
         mutableListOf(
@@ -111,6 +115,8 @@ fun getBalancedTeam(): HeldenTeam {
     )
 }
 
+
+// Gibt einen zufälligen Namen zurück
 fun getRandomName(): String {
     return listOf(
         "Tidus",

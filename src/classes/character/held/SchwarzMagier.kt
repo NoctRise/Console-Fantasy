@@ -8,6 +8,7 @@ import classes.utils.printDPSSkillLog
 class SchwarzMagier(name: String = getRandomName()) : Held(name) {
 
 
+    // init der Werte
     init {
         this.maxHP = 650
         this.currentHP = maxHP
