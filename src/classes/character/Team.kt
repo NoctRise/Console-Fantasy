@@ -51,7 +51,7 @@ open class Team() {
         println("Wähle Gegner:")
         val gegner = getGegnerTeam().filter { it.isAlive() }
         gegner.indices.forEach {
-            println("[${it + 1}] ${gegner[it].name} ")
+            println("[${it + 1}] ${gegner[it]} ")
         }
 
         return gegner[getUserInput(max = gegner.size) - 1]

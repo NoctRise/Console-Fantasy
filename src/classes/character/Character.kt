@@ -50,7 +50,7 @@ open class Character(var name: String) {
 
     // printet die Stats des Characters aus
     fun printInfo() =
-        println("${this.name} HP: ${this.maxHP} Str: ${this.strength} Int: ${this.intelligence} Crit: ${this.critChance}% Def: ${this.defense} MagDef: ${this.magicDefense}")
+        println("HP: ${this.maxHP} Str: ${this.strength} Int: ${this.intelligence} Crit: ${this.critChance}% Def: ${this.defense} MagDef: ${this.magicDefense}")
 
 
     //printet den Namen und die derzeitige HP/max HP mit dem Status aus ( Tod, vergiftet, 'Shield' (kann einen Angriff blockieren))
@@ -72,7 +72,10 @@ open class Character(var name: String) {
 
 
         // Gib den Namen currentHP/MaxHP und den Status aus
+
+
         return "${this.name}: ${this.currentHP}HP/${this.maxHP}HP  $status"
+
     }
 
 

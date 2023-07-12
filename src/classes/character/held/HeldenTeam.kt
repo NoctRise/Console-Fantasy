@@ -36,7 +36,7 @@ open class HeldenTeam() : Team() {
         println("Wähle Held:")
         val heldTeam = getHeldenTeam().filter { it.isAlive() }
         heldTeam.indices.forEach {
-            print("[${it + 1}] ${heldTeam[it]}\n")
+            println("[${it + 1}] ${heldTeam[it]}")
         }
 
         return heldTeam[getUserInput(max = heldTeam.size) - 1]

@@ -76,10 +76,10 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
     override fun attack(heldenListe: List<Held>, gegnerTeam: Team) {
 
         when ((1..100).random()) {
-            in 1..30 -> drachenKlaue(heldenListe.random())
-            in 31..50 -> feuerAtem(heldenListe.random())
-            in 51..70 -> schwanzHieb(heldenListe.random())
-            in 71..89 -> {
+            in 1..20 -> drachenKlaue(heldenListe.random())
+            in 21..40 -> feuerAtem(heldenListe.random())
+            in 41..60 -> schwanzHieb(heldenListe.random())
+            in 61..89 -> {
 
                 // Wenn noch nicht beschworen, beschwöre 2 Wyvern
                 if (!this.hasSummoned && !gegnerTeam.isFull()) {

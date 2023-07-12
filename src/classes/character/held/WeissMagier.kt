@@ -57,7 +57,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         if (held == this) {
             println("Setzt ATK-Buff auf sich selbst ein!")
         } else
-        println("${this.name} setzt ATK-Buff auf ${held.name} ein!")
+            println("${this.name} setzt ATK-Buff auf ${held.name} ein!")
 
         val buffValue = Skill("ATK-Buff").skillValue
 
@@ -74,7 +74,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         if (held == this) {
             println("Setzt Def-Buff auf sich selbst ein!")
         } else
-        println("${this.name} setzt Def-Buff auf ${held.name} ein!")
+            println("${this.name} setzt Def-Buff auf ${held.name} ein!")
 
         val buffValue = Skill("DEF-Buff").skillValue
 
@@ -98,11 +98,12 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         // Berechne die % von der MaxHP des Helden
         val healAmount = (held.maxHP * (skill.skillValue / 100.0)).toInt()
 
-        println("${held.name} wird um $healAmount geheilt")
+        println("${held.name} wird um ${healAmount}HP geheilt")
 
         // heilt den Helden um Healamount
         held.heal(healAmount)
-        print(held)
+        println(held)
+
         Thread.sleep(1000)
     }
 }

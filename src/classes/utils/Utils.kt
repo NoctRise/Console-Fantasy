@@ -45,7 +45,7 @@ fun startGame() {
     println(
         """
            Wähle dein Team         
-           [1] Ausgeglichenes Team
+           [1] Ausgeglichenes Team (Dunkelritter, Schwarzmagier, Weissmagier)
            [2] Eigenes Team
             """.trimIndent()
     )
@@ -149,7 +149,7 @@ fun getUserInput(min: Int = 1, max: Int): Int {
 // Erstellt ein Heldenteam
 fun createTeam(): HeldenTeam {
     val heldenTeam = HeldenTeam()
-    val charListe = listOf("Dunkelritter", "Schwarzmagier", "Weissmagier")
+    val charListe = listOf(DunkelRitter(), SchwarzMagier(), WeissMagier())
     var count = 3
 
     repeat(3)
@@ -158,7 +158,9 @@ fun createTeam(): HeldenTeam {
         println("Wähle eine Klasse für dein Team aus (noch $count übrig)\n")
 
         charListe.indices.forEach {
-            println("[${it + 1}] ${charListe[it]}")
+            val klasse = charListe[it].klasse.padEnd(14)
+            print("[${it + 1}] $klasse")
+            charListe[it].printInfo()
         }
 
         val index = getUserInput(1, 3)

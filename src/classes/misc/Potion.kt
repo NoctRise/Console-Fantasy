@@ -49,7 +49,7 @@ class Potion() : Item() {
             when (this.name) {
                 "Heiltrank" -> {
                     held.heal(this.value)
-                    println("${held.name} wird um ${this.value} geheilt.")
+                    println("${held.name} wird um ${this.value}HP geheilt.")
                     println(held)
                 }
 

@@ -7,7 +7,7 @@ import classes.utils.getUserInput
 
 open class Held(name: String) : Character(name) {
 
-     var klasse: String = "Held"
+    var klasse: String = "Held"
 
 
     // lässt den Nutzer einen Skill aus der Skillliste wählen und gibt ihn zurück
@@ -26,6 +26,8 @@ open class Held(name: String) : Character(name) {
 
     // Fügt der toString Methode die Klasse des Helden hinzu
     override fun toString(): String {
+
+
         return super.toString().replace(":", " [${this.klasse}]:")
     }
 
