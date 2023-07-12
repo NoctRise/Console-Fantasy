@@ -44,8 +44,8 @@ class Potion() : Item() {
 
     // Benutzt ein Item und reduziert die Anzahl um 1
     override fun useItem(held: Held) {
-        println("${this.name} wird auf ${held.name} eingesetzt.")
         if (this.anzahl > 0) {
+            println("${this.name} wird auf ${held.name} eingesetzt.")
             when (this.name) {
                 "Heiltrank" -> {
                     held.heal(this.value)

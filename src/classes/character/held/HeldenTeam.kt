@@ -60,102 +60,117 @@ open class HeldenTeam() : Team() {
         // Iteriert durch das Heldenteam
         for (held in heldenTeam) {
 
-            // Wenn das gegnerische Team am Leben ist, greife an
-            if (!gegnerTeam.isTeamDead()) {
-                println("\n${held.name} [${held.klasse}] ist an der Reihe.\n")
+            while (true) {
+                // Wenn das gegnerische Team am Leben ist, greife an
+                if (!gegnerTeam.isTeamDead()) {
 
-                // Ist der derzeitige Held vergiftet, erleide prozentualen Schaden
-                if (held.isPoisoned) {
+                    println("\n${held.name} [${held.klasse}] ist an der Reihe.\n")
 
-                    // erleidet Dmg anhand des Wertes vom Skill 'Poison Strike'
-                    val poisonDmg = (held.maxHP * (Skill("Poison Strike").skillValue / 100.0)).toInt()
-                    println("${held.name} nimmt $poisonDmg Schaden durch Poison.")
+                    // Ist der derzeitige Held vergiftet, erleide prozentualen Schaden
+                    if (held.isPoisoned) {
 
-                    // verringere Held HP
-                    held.takeDmg(poisonDmg)
+                        // erleidet Dmg anhand des Wertes vom Skill 'Poison Strike'
+                        val poisonDmg = (held.maxHP * (Skill("Poison Strike").skillValue / 100.0)).toInt()
+                        println("${held.name} nimmt $poisonDmg Schaden durch Poison.")
 
-                    // printe Heldenhp
-                    println(held)
-                    println()
+                        // verringere Held HP
+                        held.takeDmg(poisonDmg)
 
-                    // Wenn der Held gestorben ist, überspringe ihn und lasst nicht zum Zug kommen
-                    if (!held.isAlive())
-                        continue
-                }
-
-                var eingabe = 1
-
-                // Wenn sich Items im Inventar befinden, gib dem User die Auswahl zwischen Angreifen und Inventar
-                if (inventar.inventarItems.count { it.anzahl > 0 } > 0) {
-                    println("[1] Angriff\n[2] Inventar")
-
-                    // Lass den User eine Eingabe machen (Eingabe zwischen 1 und 2)
-                    eingabe = getUserInput(max = 2)
-                }
-
-
-                when (eingabe) {
-                    // User wählt Angriff
-                    1 -> {
-                        // Lässt den einen Skill vom Helden auswählen
-                        val skill = held.chooseSkill()
-
-                        // Ist der gewählte Skill ein DMG Skill?
-                        if (skill.skillTargeted == SkillTargeted.ENEMY) {
-
-                            // Wenn der Skill nicht ein AOE (Flächenschaden) Skill ist, lass den User einen Gegner wählen
-                            if (!skill.isAoe) {
-
-                                // Wenn es mehr als 2 Gegner sind, lass den User einen davon aussuchen
-                                if (gegnerTeam.getGegnerTeam().count { it.isAlive() } > 1) {
-
-                                    held.useATKSkill(skill, gegnerTeam.chooseGegner())
-
-                                } else {
-                                    // ansonsten nimm den ersten Gegner aus der Liste der überlebenden
-                                    val gegnerListe = gegnerTeam.getGegnerTeam().filter { it.isAlive() }
-                                    held.useATKSkill(skill, gegnerListe.first())
-                                }
-
-                            } // Wenn es ein AOE (Flächenschaden) Skill ist, greife jeden der Gegner an
-                            else {
-                                gegnerTeam.getGegnerTeam().filter { it.isAlive() }.forEach {
-                                    held.useATKSkill(skill, it)
-                                }
-                            }
-                            // Ist der eingesetzte Skill ein Hilfsskill?
-                        } else if (skill.skillTargeted == SkillTargeted.ALLY) {
-                            // Wenn es mehr als 2 Helden im Team gibt, lass den User wählen auf welchen Helden es angewendet wird
-                            if (heldenTeam.count { it.isAlive() } > 1)
-                                held.useAllySkill(skill, chooseHeld())
-                            else
-                            // setzt den Skill auf sich selbst ein
-                                held.useAllySkill(skill, held)
-                        }
+                        // printe Heldenhp
+                        println(held)
                         println()
+
+                        // Wenn der Held gestorben ist, überspringe ihn und lasst nicht zum Zug kommen
+                        if (!held.isAlive())
+                            continue
                     }
 
-                    2 -> {
-                        // prüft ob das Inventar Items besitzt
-                        if (inventar.inventarItems.count { it.anzahl > 0 } > 0) {
-                            // Lass den User ein Item wählen, welches nutzen kann
-                            val item = inventar.chooseInventarItems()
+                    var eingabe = 1
 
-                            // Wenn es mehr als 1 Held sind, lass den User wählen
-                            if (heldenTeam.size > 1)
-                                item.useItem(chooseHeld())
-                            else
-                            //Ansonsten nutzt das Item auf sich selbst
-                                item.useItem(held)
-                        } else
-                        // Wenn der Count 0 ist, wird ausgegeben, dass das Inventar leer ist
-                            println("Inventar ist leer")
+                    // Wenn sich Items im Inventar befinden, gib dem User die Auswahl zwischen Angreifen und Inventar
+                    if (inventar.inventarItems.count { it.anzahl > 0 } > 0) {
+                        println("[1] Angriff\n[2] Inventar")
+
+                        // Lass den User eine Eingabe machen (Eingabe zwischen 1 und 2)
+                        eingabe = getUserInput(max = 2)
                     }
 
+
+                    when (eingabe) {
+                        // User wählt Angriff
+                        1 -> {
+                            // Lässt den einen Skill vom Helden auswählen
+                            val skill = held.chooseSkill()
+
+                            // Ist der gewählte Skill ein DMG Skill?
+                            if (skill.skillTargeted == SkillTargeted.ENEMY) {
+
+                                // Wenn der Skill nicht ein AOE (Flächenschaden) Skill ist, lass den User einen Gegner wählen
+                                if (!skill.isAoe) {
+
+                                    // Wenn es mehr als 2 Gegner sind, lass den User einen davon aussuchen
+                                    if (gegnerTeam.getGegnerTeam().count { it.isAlive() } > 1) {
+
+                                        held.useATKSkill(skill, gegnerTeam.chooseGegner())
+
+                                    } else {
+                                        // ansonsten nimm den ersten Gegner aus der Liste der überlebenden
+                                        val gegnerListe = gegnerTeam.getGegnerTeam().filter { it.isAlive() }
+                                        held.useATKSkill(skill, gegnerListe.first())
+                                    }
+
+                                } // Wenn es ein AOE (Flächenschaden) Skill ist, greife jeden der Gegner an
+                                else {
+                                    gegnerTeam.getGegnerTeam().filter { it.isAlive() }.forEach {
+                                        held.useATKSkill(skill, it)
+                                    }
+                                }
+                                // Ist der eingesetzte Skill ein Hilfsskill?
+                            } else if (skill.skillTargeted == SkillTargeted.ALLY) {
+                                // Wenn es mehr als 2 Helden im Team gibt, lass den User wählen auf welchen Helden es angewendet wird
+                                if (heldenTeam.count { it.isAlive() } > 1)
+                                    held.useAllySkill(skill, chooseHeld())
+                                else
+                                // setzt den Skill auf sich selbst ein
+                                    held.useAllySkill(skill, held)
+                            }
+                            println()
+                        }
+
+                        2 -> {
+                            // prüft ob das Inventar Items besitzt
+                            if (inventar.inventarItems.count { it.anzahl > 0 } > 0) {
+                                // printet nur vorhandene Items aus
+                                inventar.printInventarItems(true)
+                                println("[0] Zurück")
+                                // Usereingabe von 0 bis Anzahl der Items, deren Anzahl > als 0 ist
+                                eingabe = getUserInput(0, inventar.inventarItems.count { it.anzahl > 0 }) - 1
+
+                                // Überspringe, wenn der User 'Zurück' gewählt hat
+                                if (eingabe == -1)
+                                    continue
+
+                                // Filter nach Items, die noch vorhanden sind
+                                val item = inventar.inventarItems.filter { it.anzahl > 0 }[eingabe]
+
+                                // Wenn es mehr als 1 Held sind, lass den User wählen
+                                if (heldenTeam.size > 1)
+                                    item.useItem(chooseHeld())
+                                else
+                                //Ansonsten nutzt das Item auf sich selbst
+                                    item.useItem(held)
+                            } else
+                            // Wenn der Count 0 ist, wird ausgegeben, dass das Inventar leer ist
+                                println("Inventar ist leer")
+                        }
+
+                    }
+                    // beendet den Zug vom Held
+                    break
+                } else {
+                    // Wenn das Gegnerteam tot ist, brich die Schleife ab
+                    break
                 }
-            } else {
-                // Wenn das Gegnerteam tot ist, brich die Schleife ab
-                break
             }
         }
     }
