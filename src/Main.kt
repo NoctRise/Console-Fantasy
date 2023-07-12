@@ -1,5 +1,5 @@
-import classes.utils.hauptmenue
+import classes.utils.hauptMenue
 
 fun main() {
-    hauptmenue()
+    hauptMenue()
 }

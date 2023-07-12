@@ -3,14 +3,18 @@ package classes.misc
 import enums.SkillTargeted
 import enums.SkillType
 
-class Skill {
+class Skill(name: String) {
 
     var name: String
+        protected set
     var skillValue: Int
+        protected set
     var skillTargeted: SkillTargeted
+        protected set
     var skillType: SkillType
+        protected set
     var isAoe: Boolean
-
+        protected set
 
     init {
         this.name = "No Name"
@@ -23,9 +27,9 @@ class Skill {
 
     // Skills mit ihren Stats
 
-    // Inspiriert von Gordon Lucas
-    constructor(name: String) {
+    init {
         when (name) {
+            // Inspiriert von Gordon Lucas
 
             // Magier Skills
             "Stockhieb" -> {

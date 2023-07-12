@@ -69,7 +69,7 @@ open class HeldenTeam() : Team() {
 
                     // erleidet Dmg anhand des Wertes vom Skill 'Poison Strike'
                     val poisonDmg = (held.maxHP * (Skill("Poison Strike").skillValue / 100.0)).toInt()
-                    println("${held.name} nimmt $poisonDmg Schaden wegen Poison.")
+                    println("${held.name} nimmt $poisonDmg Schaden durch Poison.")
 
                     // verringere Held HP
                     held.takeDmg(poisonDmg)
@@ -126,7 +126,7 @@ open class HeldenTeam() : Team() {
                             // Ist der eingesetzte Skill ein Hilfsskill?
                         } else if (skill.skillTargeted == SkillTargeted.ALLY) {
                             // Wenn es mehr als 2 Helden im Team gibt, lass den User wählen auf welchen Helden es angewendet wird
-                            if (getHeldenTeam().size > 1)
+                            if (heldenTeam.count { it.isAlive() } > 1)
                                 held.useAllySkill(skill, chooseHeld())
                             else
                             // setzt den Skill auf sich selbst ein

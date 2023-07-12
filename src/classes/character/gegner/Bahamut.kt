@@ -66,8 +66,8 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
     fun summon(gegnerTeam: Team) {
 
         println("${this.name} beschwört 2 Wyvern.")
-        gegnerTeam.teamBeitreten(Wyvern())
-        gegnerTeam.teamBeitreten(Wyvern())
+        gegnerTeam.teamBeitreten(Wyvern("Black Wyvern"))
+        gegnerTeam.teamBeitreten(Wyvern("Red Wyvern"))
         Thread.sleep(1500)
     }
 
@@ -82,9 +82,9 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
             in 71..89 -> {
 
                 // Wenn noch nicht beschworen, beschwöre 2 Wyvern
-                if (!hasSummoned && !gegnerTeam.isFull()) {
+                if (!this.hasSummoned && !gegnerTeam.isFull()) {
                     summon(gegnerTeam)
-                    hasSummoned = true
+                    this.hasSummoned = true
                 } else
                 // Ansonsten setz Poison Strike (Giftangriff) ein
                     poisonStrike(heldenListe.random())

@@ -1,12 +1,15 @@
 package classes.utils
 
-import classes.misc.Skill
 import classes.character.Character
+import classes.character.Team
+import classes.character.gegner.Bahamut
 import classes.character.held.*
+import classes.misc.*
 import enums.SkillType
+import kotlin.system.exitProcess
 
 // Gibt das Hauptmenü aus
-fun hauptmenue() {
+fun hauptMenue() {
     println(
         """
    ______                       __        ______            __                  
@@ -19,6 +22,66 @@ fun hauptmenue() {
 
     """.trimIndent()
     )
+
+    println(
+        """
+        [1] Spiel starten
+        [2] Spiel beenden""".trimIndent()
+    )
+
+    when (getUserInput(max = 2)) {
+        1 -> startGame()
+
+        2 -> {
+            println("Spiel wird beendet..")
+            exitProcess(0)
+        }
+    }
+}
+
+// Erstellt Teams und startet das Game
+fun startGame() {
+    var heldenTeam = HeldenTeam()
+    println(
+        """
+           Wähle dein Team         
+           [1] Ausgeglichenes Team
+           [2] Eigenes Team
+            """.trimIndent()
+    )
+
+
+    when (getUserInput(max = 2)) {
+        1 -> {
+            println("Ausgeglichenes Team erstellt.")
+            heldenTeam = getBalancedTeam()
+        }
+
+        2 -> heldenTeam = createTeam()
+    }
+
+    // Füge Inventaritems hinzu
+    heldenTeam.inventar = Inventar(
+        mutableListOf(
+            Potion("Heiltrank", 3),
+            Potion("Allheilmittel", 3),
+            Potion("Stärkungstrank", 1),
+            Potion("Intelligenztrank", 1)
+        )
+    )
+
+    val gegnerTeam = Team(
+        mutableListOf(
+            Bahamut()
+        )
+    )
+    Thread.sleep(1000)
+    repeat(5)
+    { println() }
+
+
+    val battle = Battle(heldenTeam, gegnerTeam)
+    battle.startBattle()
 }
 
 /*
@@ -34,7 +97,9 @@ fun calculateDmg(attacker: Character, defender: Character, skill: Skill): Int {
             (skill.skillValue * (attacker.intelligence / 100.0) * ((100 - defender.magicDefense) / 100.0)).toInt()
 
     return if ((1..100).random() <= attacker.critChance) {
+        print(red)
         println("Kritischer Treffer!")
+        print(reset)
         schaden * 2
     } else
         schaden
@@ -64,6 +129,8 @@ fun printDPSSkillLog(attacker: Character, defender: Character, skill: Skill) {
 fun getUserInput(min: Int = 1, max: Int): Int {
     var eingabe = -1
 
+    print("Eingabe: ")
+
     do {
         try {
             eingabe = readln().toInt()
@@ -75,6 +142,7 @@ fun getUserInput(min: Int = 1, max: Int): Int {
             println("Nur Eingaben von $min-$max sind erlaubt.")
         }
     } while (eingabe !in (min..max))
+    println()
     return eingabe
 }
 
@@ -82,11 +150,12 @@ fun getUserInput(min: Int = 1, max: Int): Int {
 fun createTeam(): HeldenTeam {
     val heldenTeam = HeldenTeam()
     val charListe = listOf("Dunkelritter", "Schwarzmagier", "Weissmagier")
+    var count = 3
 
     repeat(3)
     {
 
-        println("Welche Klasse soll dem Team hinzugefügt werden?\n")
+        println("Wähle eine Klasse für dein Team aus (noch $count übrig)\n")
 
         charListe.indices.forEach {
             println("[${it + 1}] ${charListe[it]}")
@@ -100,7 +169,9 @@ fun createTeam(): HeldenTeam {
             3 -> heldenTeam.teamBeitreten(WeissMagier(getRandomName()))
         }
         println("${charListe[index - 1]} erfolgreich erstellt.\n")
+        count--
     }
+    println("Team wurde erstellt.")
     return heldenTeam
 }
 
@@ -133,3 +204,8 @@ fun getRandomName(): String {
         "Cindy"
     ).random()
 }
+
+
+val reset = "\u001b[0m"
+val red = "\u001b[0;31m"
+

@@ -6,7 +6,6 @@ class Inventar() {
     var inventarItems = mutableListOf<Item>()
         private set
 
-
     constructor(inventarItems: MutableList<Item>) : this() {
         this.inventarItems = inventarItems
     }

@@ -2,6 +2,8 @@ package classes.misc
 
 import classes.character.Team
 import classes.character.held.HeldenTeam
+import classes.utils.red
+import classes.utils.reset
 
 class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
 
@@ -52,8 +54,8 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
     // Gib den Sieg aus des Teams aus
     fun printWinner() {
         when {
-            heldenTeam.isTeamDead() -> println("Game Over.")
-            gegnerTeam.isTeamDead() -> println("Sieg!")
+            heldenTeam.isTeamDead() -> println("${red}Game Over.$reset")
+            gegnerTeam.isTeamDead() -> println("Du hast gewonnen!")
         }
     }
 }

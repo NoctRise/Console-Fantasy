@@ -76,11 +76,11 @@ open class Team() {
             // Wenn das Heldenteam noch nicht tot ist, greife an
             if (!heldenTeam.isTeamDead()) {
                 // Wenn der derzeitige Gegner (Angreifer) am Leben ist, greife einen Helden an
-                    println("${gegner.name} ist an der Reihe.\n")
+                println("${gegner.name} ist an der Reihe.\n")
 
-                    //greife einen lebenden Helden an
-                    gegner.attack((heldenTeam.getHeldenTeam().filter { it.isAlive() }), this)
-                    Thread.sleep(1000)
+                //greife einen lebenden Helden an
+                gegner.attack((heldenTeam.getHeldenTeam().filter { it.isAlive() }), this)
+                Thread.sleep(1000)
 
             } else {
                 // Wenn das Heldenteam tot ist, beende Schleife
