@@ -21,16 +21,16 @@ fun main() {
 
         val heldenTeam = HeldenTeam(
             mutableListOf(
-                DunkelRitter(),
+                DunkelRitter()/*,
                 WeissMagier(),
-                SchwarzMagier()
+                SchwarzMagier()*/
             ),
             Inventar(
                 mutableListOf(
-                    Potion("Heiltrank", 3),
-                    Potion("Stärkungstrank", 1),
+                    /*Potion("Heiltrank", 3),
+                    Potion("Stärkungstrank", 1),*/
                     Potion("Intelligenztrank", 1),
-                    Potion("Allheilmittel", 3)
+/*                    Potion("Allheilmittel", 3)*/
 
                 )
             )

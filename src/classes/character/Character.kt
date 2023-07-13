@@ -84,8 +84,21 @@ open class Character(var name: String) {
         when (stat) {
             Stat.MAXHP -> maxHP += amount
             Stat.CRITCHANCE -> critChance += amount
-            Stat.DEFENSE -> defense += amount
-            Stat.MAGICDEFENSE -> magicDefense += amount
+            Stat.DEFENSE -> {
+                defense += amount
+                if (defense > 70) {
+                    println("Defense hat das Maximum von 70% erreicht.")
+                    defense = 70
+                }
+            }
+
+            Stat.MAGICDEFENSE -> {
+                magicDefense += amount
+                if (magicDefense > 70) {
+                    println("Magic Defense hat das Maximum von 70% erreicht.")
+                    magicDefense = 70
+                }
+            }
             Stat.STRENGTH -> strength += amount
             Stat.INTELLIGENCE -> intelligence += amount
         }

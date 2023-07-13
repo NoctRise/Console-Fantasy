@@ -99,8 +99,25 @@ open class HeldenTeam() : Team() {
                     when (eingabe) {
                         // User wählt Angriff
                         1 -> {
+
+                            // Wenn es noch Items im Inventar sind, printe die Skills aus + Zurück Option
+                            val skill = if (inventar.hasItemsToUse()) {
+                                held.printSkills()
+                                println("[0] Zurück")
+
+                                // Userinput von 0 bis Anzahl der Skills-1
+                                val userEingabe = getUserInput(0, held.skillListe.size) - 1
+
+                                // Bei einer Eingabe von 0, überspringe
+                                if (userEingabe == -1)
+                                    continue
+                                else
+                                    // ansonsten weise 'skill' den Skill auf dem Index der Usereingabe
+                                    held.skillListe[userEingabe]
+                            } else
                             // Lässt den einen Skill vom Helden auswählen
-                            val skill = held.chooseSkill()
+                                held.chooseSkill()
+
 
                             // Ist der gewählte Skill ein DMG Skill?
                             if (skill.skillTargeted == SkillTargeted.ENEMY) {
@@ -139,10 +156,12 @@ open class HeldenTeam() : Team() {
 
                         2 -> {
                             // prüft ob das Inventar Items besitzt
-                            if (inventar.inventarItems.count { it.anzahl > 0 } > 0) {
+                            if (inventar.hasItemsToUse()) {
+
                                 // printet nur vorhandene Items aus
                                 inventar.printInventarItems(true)
                                 println("[0] Zurück")
+
                                 // Usereingabe von 0 bis Anzahl der Items, deren Anzahl > als 0 ist
                                 eingabe = getUserInput(0, inventar.inventarItems.count { it.anzahl > 0 }) - 1
 

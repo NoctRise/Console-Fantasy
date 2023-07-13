@@ -65,6 +65,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         held.buff(Stat.STRENGTH, buffValue)
         held.buff(Stat.INTELLIGENCE, buffValue)
 
+
         println("${held.name}'s Strength und Intelligence ist um $buffValue gestiegen!")
         Thread.sleep(1000)
     }
@@ -82,7 +83,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         held.buff(Stat.DEFENSE, buffValue)
         held.buff(Stat.MAGICDEFENSE, buffValue)
 
-        println("${held.name}'s Defense und Magic Defense ist um $buffValue gestiegen!")
+        println("${held.name}'s Defense und Magic Defense ist um ${buffValue}% gestiegen!")
         Thread.sleep(1000)
     }
 

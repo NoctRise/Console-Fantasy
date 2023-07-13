@@ -23,8 +23,8 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
         // fügt Skills hinzu
         this.skillListe = mutableListOf(
             Skill("Drachenklaue"),
-            Skill("Feueratem"),
-            Skill("Schwanzhieb"),
+            Skill("Feura"),
+            Skill("Himmelszorn"),
             Skill("Supernova"),
             Skill("Poison Strike"),
             Skill("Summon")
@@ -38,12 +38,12 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
     }
 
     // Skill 2, greift einen einzelnen Helden mit einem magischen Skill an und printet es aus
-    fun feuerAtem(held: Held) {
+    fun feura(held: Held) {
         printDPSSkillLog(this, held, skillListe[1])
     }
 
     // Skill 3, greift einen einzelnen Helden mit einem physischen Skill an und printet es aus
-    fun schwanzHieb(held: Held) {
+    fun himmelszorn(held: Held) {
         printDPSSkillLog(this, held, skillListe[2])
     }
 
@@ -57,7 +57,7 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
 
     // Skill 5, vergiftet einen Helden und lässt ihn jede Runde prozentualen Schaden erleiden
     fun poisonStrike(held: Held) {
-        println("${this.name} setzt ${skillListe[4].name} auf ${held.name} ein.")
+        println("${this.name} setzt ${skillListe[4].name} auf ${held.name} ein.\n")
         held.isPoisoned = true
         Thread.sleep(1500)
     }
@@ -77,8 +77,8 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
 
         when ((1..100).random()) {
             in 1..20 -> drachenKlaue(heldenListe.random())
-            in 21..40 -> feuerAtem(heldenListe.random())
-            in 41..60 -> schwanzHieb(heldenListe.random())
+            in 21..40 -> feura(heldenListe.random())
+            in 41..60 -> himmelszorn(heldenListe.random())
             in 61..89 -> {
 
                 // Wenn noch nicht beschworen, beschwöre 2 Wyvern

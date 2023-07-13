@@ -72,7 +72,7 @@ class Skill(name: String) {
 
             "DEF-Buff" -> {
                 this.name = name
-                this.skillValue = 15
+                this.skillValue = 10
                 this.skillTargeted = SkillTargeted.ALLY
             }
 
@@ -114,13 +114,13 @@ class Skill(name: String) {
                 this.skillType = SkillType.PHY
             }
 
-            "Feueratem" -> {
+            "Feura" -> {
                 this.name = name
                 this.skillValue = 90
                 this.skillType = SkillType.MAG
             }
 
-            "Schwanzhieb" -> {
+            "Himmelszorn" -> {
                 this.name = name
                 this.skillValue = 100
                 this.skillType = SkillType.PHY

@@ -36,4 +36,5 @@ class Inventar() {
         }
     }
 
+    fun hasItemsToUse() = inventarItems.count { it.anzahl > 0 } > 0
 }
