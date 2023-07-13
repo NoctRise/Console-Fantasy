@@ -36,5 +36,6 @@ class Inventar() {
         }
     }
 
+    // Gibt aus, ob das Inventar noch Items hat, die man benutzen kann
     fun hasItemsToUse() = inventarItems.count { it.anzahl > 0 } > 0
 }

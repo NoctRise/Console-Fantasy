@@ -59,7 +59,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         } else
             println("${this.name} setzt ATK-Buff auf ${held.name} ein!")
 
-        val buffValue = Skill("ATK-Buff").skillValue
+        val buffValue = skillListe[1].skillValue
 
         // erhöhe die Stats um Buffvalue
         held.buff(Stat.STRENGTH, buffValue)
@@ -77,7 +77,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         } else
             println("${this.name} setzt Def-Buff auf ${held.name} ein!")
 
-        val buffValue = Skill("DEF-Buff").skillValue
+        val buffValue = skillListe[2].skillValue
 
         // erhöhe die Stats um Buffvalue
         held.buff(Stat.DEFENSE, buffValue)
