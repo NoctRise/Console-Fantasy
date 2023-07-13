@@ -6,6 +6,7 @@
 
 Console Fantasy ist ein rundenbasiertes Konsolenspiel, was durch das RPG Spiel Final Fantasy
 inspiriert wurde.
+
 ---
 <details>
 <summary>Programmstart</summary>
@@ -22,6 +23,7 @@ Das Ziel ist es den Boss Bahamut mit deinem Team zu besiegen.
 
 Dir steht ein Team aus 3 Helden zur Verfügung. Du kannst entweder ein balanciertes Team aussuchen,
 was aus einem Dunkelritter, Schwarzmagier und Weissmagier besteht oder du kannst dir dein eigenes erstellen.
+
 ---
 ### Charakter
 
