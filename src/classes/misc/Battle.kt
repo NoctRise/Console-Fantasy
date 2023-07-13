@@ -56,7 +56,7 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
     fun printWinner() {
         when {
             heldenTeam.isTeamDead() -> println("${red}Game Over.$reset")
-            gegnerTeam.isTeamDead() -> println("${green}You won$reset")
+            gegnerTeam.isTeamDead() -> println("${green}You won.$reset")
         }
     }
 }

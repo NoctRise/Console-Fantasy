@@ -21,9 +21,9 @@ fun main() {
 
         val heldenTeam = HeldenTeam(
             mutableListOf(
-                DunkelRitter(),
-                WeissMagier()
-                /*SchwarzMagier()*/
+                DunkelRitter()
+                /*WeissMagier()
+                SchwarzMagier()*/
             ),
             Inventar(
                 mutableListOf(
@@ -35,6 +35,7 @@ fun main() {
                 )
             )
         )
+
 
         val battle = Battle(heldenTeam, gegnerTeam)
         battle.startBattle()

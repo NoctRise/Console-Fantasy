@@ -87,7 +87,7 @@ open class HeldenTeam() : Team() {
                     var eingabe = 1
 
                     // Wenn sich Items im Inventar befinden, gib dem User die Auswahl zwischen Angreifen und Inventar
-                    if (inventar.inventarItems.count { it.anzahl > 0 } > 0) {
+                    if (inventar.hasItemsToUse()) {
                         println("[1] Angriff\n[2] Inventar")
 
                         // Lass den User eine Eingabe machen (Eingabe zwischen 1 und 2)
