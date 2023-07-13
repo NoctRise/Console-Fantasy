@@ -3,7 +3,9 @@ package classes.character.held
 import classes.misc.Skill
 import classes.character.gegner.Gegner
 import classes.utils.getRandomName
+import classes.utils.green
 import classes.utils.printDPSSkillLog
+import classes.utils.reset
 import enums.Stat
 
 class WeissMagier(name: String = getRandomName()) : Held(name) {
@@ -24,7 +26,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
             Skill("Basic Attack"),
             Skill("ATK-Buff"),
             Skill("DEF-Buff"),
-            Skill("Heal")
+            Skill("Vita")
         )
     }
 
@@ -42,7 +44,7 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         when (skill.name) {
             "ATK-Buff" -> atkBuff(held)
             "DEF-Buff" -> defBuff(held)
-            "Heal" -> healAllies(held)
+            "Vita" -> vita(held)
             else -> println("Besitzt diesen Skill nicht")
         }
     }
@@ -88,18 +90,21 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
     }
 
 
-    // Skill 4, heilt einen Helden um den Skillvalue von Heal
-    fun healAllies(held: Held) {
-        if (held == this) {
-            println("Setzt Heal auf sich selbst ein!")
-        } else
-            println("${this.name} setzt Heal auf ${held.name} ein!")
+    // Skill 4, heilt einen Helden um den Skillvalue von Vita
+    fun vita(held: Held) {
 
-        val skill = Skill("Heal")
+        val skill = skillListe[3]
+
+        if (held == this) {
+            println("Setzt ${skill.name} auf sich selbst ein!")
+        } else
+            println("${this.name} setzt ${skill.name} auf ${held.name} ein!")
+
+
         // Berechne die % von der MaxHP des Helden
         val healAmount = (held.maxHP * (skill.skillValue / 100.0)).toInt()
 
-        println("${held.name} wird um ${healAmount}HP geheilt")
+        println("${held.name} wird um $green${healAmount}HP$reset geheilt")
 
         // heilt den Helden um Healamount
         held.heal(healAmount)

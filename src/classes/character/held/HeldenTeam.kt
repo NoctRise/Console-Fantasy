@@ -38,7 +38,6 @@ open class HeldenTeam() : Team() {
         heldTeam.indices.forEach {
             println("[${it + 1}] ${heldTeam[it]}")
         }
-
         return heldTeam[getUserInput(max = heldTeam.size) - 1]
     }
 
@@ -59,10 +58,10 @@ open class HeldenTeam() : Team() {
 
         // Iteriert durch das Heldenteam
         for (held in heldenTeam) {
+            if (!gegnerTeam.isTeamDead()) {
+                while (true) {
+                    // Wenn das gegnerische Team am Leben ist, greife an
 
-            while (true) {
-                // Wenn das gegnerische Team am Leben ist, greife an
-                if (!gegnerTeam.isTeamDead()) {
 
                     println("\n${held.name} [${held.klasse}] ist an der Reihe.\n")
 
@@ -112,7 +111,7 @@ open class HeldenTeam() : Team() {
                                 if (userEingabe == -1)
                                     continue
                                 else
-                                    // ansonsten weise 'skill' den Skill auf dem Index der Usereingabe
+                                // ansonsten weise 'skill' den Skill auf dem Index der Usereingabe
                                     held.skillListe[userEingabe]
                             } else
                             // Lässt den einen Skill vom Helden auswählen
@@ -186,10 +185,10 @@ open class HeldenTeam() : Team() {
                     }
                     // beendet den Zug vom Held
                     break
-                } else {
-                    // Wenn das Gegnerteam tot ist, brich die Schleife ab
-                    break
                 }
+            } else {
+                // Wenn das Gegnerteam tot ist, brich die Schleife ab
+                break
             }
         }
     }

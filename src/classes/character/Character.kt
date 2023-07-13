@@ -50,7 +50,7 @@ open class Character(var name: String) {
 
     // printet die Stats des Characters aus
     fun printInfo() =
-        println("HP: ${this.maxHP} Str: ${this.strength} Int: ${this.intelligence} Crit: ${this.critChance}% Def: ${this.defense} MagDef: ${this.magicDefense}")
+        println("HP: ${this.maxHP} Str: ${this.strength} Int: ${this.intelligence} Crit: ${this.critChance}% Def: ${this.defense}% MagDef: ${this.magicDefense}%    ")
 
 
     //printet den Namen und die derzeitige HP/max HP mit dem Status aus ( Tod, vergiftet, 'Shield' (kann einen Angriff blockieren))
@@ -79,13 +79,13 @@ open class Character(var name: String) {
     }
 
 
-    // Erhöht Stats um den Wert 'amount'
-    fun buff(stat: Stat, amount: Int) {
+    // Erhöht Stats um den Wert 'value'
+    fun buff(stat: Stat, value: Int) {
         when (stat) {
-            Stat.MAXHP -> maxHP += amount
-            Stat.CRITCHANCE -> critChance += amount
+            Stat.MAXHP -> maxHP += value
+            Stat.CRITCHANCE -> critChance += value
             Stat.DEFENSE -> {
-                defense += amount
+                defense += value
                 if (defense > 70) {
                     println("Defense hat das Maximum von 70% erreicht.")
                     defense = 70
@@ -93,14 +93,14 @@ open class Character(var name: String) {
             }
 
             Stat.MAGICDEFENSE -> {
-                magicDefense += amount
+                magicDefense += value
                 if (magicDefense > 70) {
                     println("Magic Defense hat das Maximum von 70% erreicht.")
                     magicDefense = 70
                 }
             }
-            Stat.STRENGTH -> strength += amount
-            Stat.INTELLIGENCE -> intelligence += amount
+            Stat.STRENGTH -> strength += value
+            Stat.INTELLIGENCE -> intelligence += value
         }
     }
 

@@ -31,7 +31,7 @@ class DunkelRitter(name: String = getRandomName()) : Held(name) {
     // führt anhand der Parameter einen Angriffsskill auf einen Gegner aus
     override fun useATKSkill(skill: Skill, gegner: Gegner) {
         when (skill.name) {
-            "Chaosklinge" -> chaosklinge(gegner)
+            "Chaosklinge" -> chaosKlinge(gegner)
             "Doppelklinge" -> doppeltKlinge(gegner)
             "Excalibur" -> excalibur(gegner)
             else -> println("Besitzt diesen Skill nicht")
@@ -56,7 +56,7 @@ class DunkelRitter(name: String = getRandomName()) : Held(name) {
     }
 
     // Skill 2, greift einen einzelnen Helden mit einem physischen Skill an und printet es aus
-    fun chaosklinge(gegner: Gegner) {
+    fun chaosKlinge(gegner: Gegner) {
         printDPSSkillLog(this, gegner, skillListe[1])
     }
 

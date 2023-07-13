@@ -21,7 +21,7 @@ class Wyvern(name: String = "Wyvern") : Gegner(name) {
         this.skillListe = mutableListOf(
             Skill("Biss"),
             Skill("Blizzard"),
-            Skill("Eis Atem"),
+            Skill("Eisatem"),
             Skill("Blaue Flamme")
         )
     }
@@ -48,12 +48,12 @@ class Wyvern(name: String = "Wyvern") : Gegner(name) {
 
 
     // lässt Wyvern einen zufälligen Helden angreifen.
-    override fun attack(heldenListe: List<Held>, gegnerTeam: Team) {
+    override fun attack(heldenList: List<Held>, gegnerTeam: Team) {
         when ((1..100).random()) {
-            in 1..30 -> biss(heldenListe.random())
-            in 31..50 -> blizzard(heldenListe.random())
-            in 51..70 -> eisAtem(heldenListe.random())
-            in 71..100 -> blaueFlamme(heldenListe.random())
+            in 1..30 -> biss(heldenList.random())
+            in 31..50 -> blizzard(heldenList.random())
+            in 51..70 -> eisAtem(heldenList.random())
+            in 71..100 -> blaueFlamme(heldenList.random())
         }
     }
 }

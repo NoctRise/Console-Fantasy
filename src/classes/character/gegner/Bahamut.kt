@@ -5,7 +5,7 @@ import classes.misc.Skill
 import classes.character.held.Held
 import classes.utils.printDPSSkillLog
 
-class Bahamut(name: String = "Bahamut") : Boss(name) {
+class Bahamut(name: String = "Bahamut") : Gegner(name) {
 
     // Gibt an, ob der Boss Wyvern beschworen hat.
     var hasSummoned = false
@@ -43,7 +43,7 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
     }
 
     // Skill 3, greift einen einzelnen Helden mit einem physischen Skill an und printet es aus
-    fun himmelszorn(held: Held) {
+    fun himmelsZorn(held: Held) {
         printDPSSkillLog(this, held, skillListe[2])
     }
 
@@ -73,12 +73,12 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
 
 
     // lässt Bahamut einen zufälligen Helden angreifen.
-    override fun attack(heldenListe: List<Held>, gegnerTeam: Team) {
+    override fun attack(heldenList: List<Held>, gegnerTeam: Team) {
 
         when ((1..100).random()) {
-            in 1..20 -> drachenKlaue(heldenListe.random())
-            in 21..40 -> feura(heldenListe.random())
-            in 41..60 -> himmelszorn(heldenListe.random())
+            in 1..20 -> drachenKlaue(heldenList.random())
+            in 21..40 -> feura(heldenList.random())
+            in 41..60 -> himmelsZorn(heldenList.random())
             in 61..89 -> {
 
                 // Wenn noch nicht beschworen, beschwöre 2 Wyvern
@@ -87,10 +87,10 @@ class Bahamut(name: String = "Bahamut") : Boss(name) {
                     this.hasSummoned = true
                 } else
                 // Ansonsten setz Poison Strike (Giftangriff) ein
-                    poisonStrike(heldenListe.random())
+                    poisonStrike(heldenList.random())
             }
 
-            in 90..100 -> superNova(heldenListe)
+            in 90..100 -> superNova(heldenList)
         }
 
     }

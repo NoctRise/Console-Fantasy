@@ -2,6 +2,7 @@ package classes.misc
 
 import classes.character.Team
 import classes.character.held.HeldenTeam
+import classes.utils.green
 import classes.utils.red
 import classes.utils.reset
 
@@ -28,7 +29,7 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
         // Beide Teams greifen an
         heldenTeam.attack(gegnerTeam)
         gegnerTeam.attack(heldenTeam)
-        println("---------------------------------------------\n")
+        println("---------------------------------------------------\n")
 
         // printe die TeamHP aus
         printTeamHP()
@@ -55,7 +56,7 @@ class Battle(private var heldenTeam: HeldenTeam, private var gegnerTeam: Team) {
     fun printWinner() {
         when {
             heldenTeam.isTeamDead() -> println("${red}Game Over.$reset")
-            gegnerTeam.isTeamDead() -> println("Du hast gewonnen!")
+            gegnerTeam.isTeamDead() -> println("${green}You won$reset")
         }
     }
 }

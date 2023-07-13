@@ -19,7 +19,7 @@ class SchwarzMagier(name: String = getRandomName()) : Held(name) {
         this.intelligence = 175
         this.klasse = "Schwarzmagier"
         this.skillListe = mutableListOf(
-            Skill("Stockhieb"),
+            Skill("Stabhieb"),
             Skill("Feuerball"),
             Skill("Eissturm"),
             Skill("Ultima")
@@ -30,7 +30,7 @@ class SchwarzMagier(name: String = getRandomName()) : Held(name) {
 
     override fun useATKSkill(skill: Skill, gegner: Gegner) {
         when (skill.name) {
-            "Stockhieb" -> stockHieb(gegner)
+            "Stabhieb" -> stabHieb(gegner)
             "Feuerball" -> feuerBall(gegner)
             "Eissturm" -> eisSturm(gegner)
             "Ultima" -> ultima(gegner)
@@ -39,7 +39,7 @@ class SchwarzMagier(name: String = getRandomName()) : Held(name) {
 
     }
 
-    fun stockHieb(gegner: Gegner) {
+    fun stabHieb(gegner: Gegner) {
         printDPSSkillLog(this, gegner, skillListe[0])
     }
 

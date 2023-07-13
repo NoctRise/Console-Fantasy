@@ -32,7 +32,7 @@ class Skill(name: String) {
             // Inspiriert von Gordon Lucas
 
             // Magier Skills
-            "Stockhieb" -> {
+            "Stabhieb" -> {
                 this.name = name
                 this.skillValue = 100
                 this.skillType = SkillType.PHY
@@ -76,7 +76,7 @@ class Skill(name: String) {
                 this.skillTargeted = SkillTargeted.ALLY
             }
 
-            "Heal" -> {
+            "Vita" -> {
                 this.name = name
                 this.skillValue = 25
                 this.skillTargeted = SkillTargeted.ALLY
@@ -157,7 +157,7 @@ class Skill(name: String) {
                 this.skillType = SkillType.MAG
             }
 
-            "Eis Atem" -> {
+            "Eisatem" -> {
                 this.name = name
                 this.skillValue = 100
                 this.skillType = SkillType.MAG

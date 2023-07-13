@@ -1,6 +1,8 @@
 package classes.misc
 
 import classes.character.held.Held
+import classes.utils.green
+import classes.utils.reset
 import enums.Stat
 
 class Potion() : Item() {
@@ -49,7 +51,7 @@ class Potion() : Item() {
             when (this.name) {
                 "Heiltrank" -> {
                     held.heal(this.value)
-                    println("${held.name} wird um ${this.value}HP geheilt.")
+                    println("${held.name} wird um $green${this.value}HP${reset} geheilt.")
                     println(held)
                 }
 

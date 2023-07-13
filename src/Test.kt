@@ -21,9 +21,9 @@ fun main() {
 
         val heldenTeam = HeldenTeam(
             mutableListOf(
-                /*DunkelRitter(),*/
-                WeissMagier()/*,
-                SchwarzMagier()*/
+                DunkelRitter(),
+                WeissMagier()
+                /*SchwarzMagier()*/
             ),
             Inventar(
                 mutableListOf(

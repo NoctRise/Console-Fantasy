@@ -166,11 +166,10 @@ fun createTeam(): HeldenTeam {
         val index = getUserInput(1, 3)
 
         when (index) {
-            1 -> heldenTeam.teamBeitreten(DunkelRitter(getRandomName()))
-            2 -> heldenTeam.teamBeitreten(SchwarzMagier(getRandomName()))
-            3 -> heldenTeam.teamBeitreten(WeissMagier(getRandomName()))
+            1 -> heldenTeam.teamBeitreten(DunkelRitter())
+            2 -> heldenTeam.teamBeitreten(SchwarzMagier())
+            3 -> heldenTeam.teamBeitreten(WeissMagier())
         }
-        println("${charListe[index - 1]} erfolgreich erstellt.\n")
         count--
     }
     println("Team wurde erstellt.")
@@ -207,7 +206,7 @@ fun getRandomName(): String {
     ).random()
 }
 
-
+// Farbcodes
 val reset = "\u001b[0m"
 val red = "\u001b[0;31m"
-
+val green = "\u001b[0;32m"
