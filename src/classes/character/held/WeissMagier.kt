@@ -85,7 +85,11 @@ class WeissMagier(name: String = getRandomName()) : Held(name) {
         held.buff(Stat.DEFENSE, buffValue)
         held.buff(Stat.MAGICDEFENSE, buffValue)
 
-        println("${held.name}'s Defense und Magic Defense ist um ${buffValue}% gestiegen!")
+        when {
+            held.defense < 70 && held.magicDefense < 70 -> println("${held.name}'s Defense und Magic Defense ist um ${buffValue}% gestiegen!")
+            held.defense < 70 -> println("${held.name}'s Defense ist um ${buffValue}% gestiegen!")
+            held.magicDefense < 70 -> println("${held.name}'s Magic Defense ist um ${buffValue}% gestiegen!")
+        }
         Thread.sleep(1000)
     }
 
