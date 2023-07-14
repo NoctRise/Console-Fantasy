@@ -81,7 +81,7 @@ open class HeldenTeam() : Team() {
 
                         // Wenn der Held gestorben ist, überspringe ihn und lasst nicht zum Zug kommen
                         if (!held.isAlive())
-                            continue
+                            break
                     }
 
                     var eingabe = 1
@@ -172,7 +172,7 @@ open class HeldenTeam() : Team() {
                                 val item = inventar.inventarItems.filter { it.anzahl > 0 }[eingabe]
 
                                 // Wenn es mehr als 1 Held sind, lass den User wählen
-                                if (heldenTeam.size > 1)
+                                if (heldenTeam.count { it.isAlive() } > 1)
                                     item.useItem(chooseHeld())
                                 else
                                 //Ansonsten nutzt das Item auf sich selbst
